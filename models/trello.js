@@ -8,6 +8,10 @@ orm.selectAll(function(result) {
 //     console.log(result)
 // })
 
-orm.updateOne(6, 'Make ORM a class', 'Ideas', function(result) {
-    console.log(result)
-})
+// orm.updateOne(6, 'Make ORM a class', 'Doing', function(result) {
+//     console.log(result)
+// })
+
+// orm.deleteOne(6, function(result) {
+//     console.log(result)
+// })

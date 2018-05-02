@@ -35,7 +35,7 @@ class ObjectRelationalMapping {
 
     updateOne(itemId, text, list, callback) {
 
-        let queryString = 'UPDATE ?? SET ?, ? WHERE ?'
+        let queryString = 'UPDATE ?? SET ?, ? WHERE ?;'
 
         let textUpdate = {}
         textUpdate[this.columns[0]] = text
@@ -43,17 +43,29 @@ class ObjectRelationalMapping {
         let listUpdate = {}
         listUpdate[this.columns[1]] = list
 
-        let reference = {
+        connection.query(queryString, [this.table, textUpdate, listUpdate, {
             id: itemId
-        }
-
-        connection.query(queryString, [this.table, textUpdate, listUpdate, reference], function (err, result) {
+        }], function (err, result) {
             if (err) {
                 throw err
             }
             callback(result)
         })
     } //updateOne
+
+    deleteOne(itemId, callback) {
+
+        let queryString = 'DELETE FROM ?? WHERE ?;'
+
+        connection.query(queryString, [this.table, {
+            id: itemId
+        }], function (err, result) {
+            if (err) {
+                throw err
+            }
+            callback(result)
+        })
+    } //deleteOne
 }
 
 let orm = new ObjectRelationalMapping('cards', ['text', 'list'])
