@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico|Vibur');
+html, body {
+    height: 100%;
+    width: 200%;
+}
+
+body {
+    background-image: linear-gradient(to right bottom, #d1ccc0, #e2d7d1, #ece3e4, #f5f1f3, #ffffff);
+    background-image: url('./../img/bg-red-mt.jpg');
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: left top;
+}
+
+.brand-logo {
+    font-family: 'Pacifico', cursive;
+}
+
+.col {
+    width: 270px;
+}
+
+.card-content {
+    padding: 10px !important;
+}
+
+.add-card-btn-wrapper {
+    width: 100% !important;
+}
+
+.underlined {
+    text-decoration: underline;
+}
+
+@media(max-width: 992px) {
+    body {
+        background-position: center;
+    }
+}
