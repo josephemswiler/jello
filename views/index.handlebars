@@ -60,16 +60,17 @@
     </ul>
     {{!-- /.sidenav --}}
     <div class="container left card-wrapper">
+        {{#each list}}
         <div class="card outer-card active-card">
             <div class="card-content grey lighten-3">
                 <div class="card-name">
-                    <strong>Ideas</strong>
-                    <div class="grey grey-text ellipsis-btn right center-align lighten-3" href="#modal-Ideas"> 
-                   ...
+                    <strong>{{list}}</strong>
+                    <div class="grey grey-text ellipsis-btn right center-align lighten-3" href="#modal-Ideas">
+                        ...
                     </div>
                 </div>
                 <div class="card-data">
-                    {{#each card}}
+                    {{#each cards}}
                     <div id="{{id}}" class="card inner-card">
                         <div class="card-content">
                             <p>{{text}}</p>
@@ -82,7 +83,7 @@
                 <div class="add-card-btn card-content">Add a card...</div>
             </div>
         </div>
-        {{!-- /.card --}}
+        {{/each}} {{!-- /.card --}}
         <div class="card add-list-card outer-card">
             <div class="add-list-btn card-content grey-text text-lighten-2">Add a list...</div>
         </div>

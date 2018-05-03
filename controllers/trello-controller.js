@@ -10,8 +10,27 @@ const allCards = require('./../models/trello.js')
 
 //route here
 
+
+
 router.get("/", function (req, res) {
-    res.render("index")
+
+    allCards.selectAll(function (data) {
+
+        let obj = {
+            cards: data
+        }
+
+        let lists = {}
+
+        for (let i in data) {
+            console.log(data[i].list)
+        }
+
+
+
+        res.render('index', obj)
+
+    })
 })
 
 module.exports = router
