@@ -1,99 +1,95 @@
-<div class="navbar-fixed">
-    <nav>
-        <div class="nav-wrapper grey">
-            <a href="#!" class="brand-logo center">Trello Clone</a>
-            <a href="#" data-target="mobile-sidenav" class="sidenav-trigger">
-                <i class="fas fa-bars"></i>
-            </a>
-            <ul class="left hide-on-med-and-down">
-                <li class="active">
-                    <a href="#">Boards</a>
-                </li>
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="https://github.com/josephemswiler" target="_blank">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.linkedin.com/in/josephemswiler/" target="_blank">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="mailto:josephemswiler@gmail.com" class="tooltipped" data-position="bottom" data-tooltip="josephemswiler@gmail.com"
-                        target="_blank">
-                        <i class="far fa-envelope"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</div>
-{{!-- /.navbar-fixed --}}
-<ul id="mobile-sidenav" class="sidenav left">
-    <li class="active">
-        <a href="#">Boards</a>
-    </li>
-    <li>
-        <a href="#">About</a>
-    </li>
-    <li>
-        <a href="https://github.com/josephemswiler" target="_blank">
-            <i class="fab fa-github"></i>
-        </a>
-    </li>
-    <li>
-        <a href="https://www.linkedin.com/in/josephemswiler/" target="_blank">
-            <i class="fab fa-linkedin-in"></i>
-        </a>
-    </li>
-    <li>
-
-        <a href="mailto:josephemswiler@gmail.com" target="_blank">
-            <i class="far fa-envelope"></i>
-        </a>
-    </li>
-</ul>
-{{!-- /.sidenav --}}
-<div class="container left">
-    <div class="row">
-        <div class="card">
-            <div class="col">
-                <a class="waves-effect waves-light btn board-name-btn">Board</a>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col list-col">
-            <div class="card">
-                <div class="card-content grey lighten-3">
-                    <div class="card-name">
-                        <strong>Ideas</strong>
-                        <a class="grey grey-text ellipsis-btn lighten-3 right">
-                            <i class="fas fa-ellipsis-h"></i>
+<div class="wrapper">
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper grey">
+                <a href="#!" class="brand-logo center">Trello Clone</a>
+                <a href="#" data-target="mobile-sidenav" class="sidenav-trigger">
+                    <i class="fas fa-bars"></i>
+                </a>
+                <ul class="left hide-on-med-and-down">
+                    <li class="active">
+                        <a href="#">Boards</a>
+                    </li>
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/josephemswiler" target="_blank">
+                            <i class="fab fa-github"></i>
                         </a>
-                    </div>
-                    {{!--
-                    <div class="card">
-                        <div class="card-content">
-                            A card.
-                        </div>
-                    </div> --}}
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/josephemswiler/" target="_blank">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:josephemswiler@gmail.com" class="tooltipped" data-position="bottom" data-tooltip="josephemswiler@gmail.com"
+                            target="_blank">
+                            <i class="far fa-envelope"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    {{!-- /.navbar-fixed --}}
+    <ul id="mobile-sidenav" class="sidenav left">
+        <li class="active">
+            <a href="#">Boards</a>
+        </li>
+        <li>
+            <a href="#">About</a>
+        </li>
+        <li>
+            <a href="https://github.com/josephemswiler" target="_blank">
+                <i class="fab fa-github"></i>
+            </a>
+        </li>
+        <li>
+            <a href="https://www.linkedin.com/in/josephemswiler/" target="_blank">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+        </li>
+        <li>
 
+            <a href="mailto:josephemswiler@gmail.com" target="_blank">
+                <i class="far fa-envelope"></i>
+            </a>
+        </li>
+    </ul>
+    {{!-- /.sidenav --}}
+    <div class="container left card-wrapper">
+        <div class="card outer-card active-card">
+            <div class="card-content grey lighten-3">
+                <div class="card-name">
+                    <strong>Ideas</strong>
+                    <a class="grey grey-text ellipsis-btn lighten-3 right">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </a>
                 </div>
-                <div class="add-card-btn-wrapper grey lighten-3">
-                    <div class="add-card-btn card-content">Add a card...</div>
+                <div class="card-data">
+                    <div class="card inner-card">
+                        <div class="card-content">
+                            <p>We count thirty Rebel ships, Lord Vader. But they're so small they're evading our turbo-lasers!
+                                We'll have to destroy them ship to ship. Get the crews to their fighters. Luke, let me know
+                                when you're going in. I'm on my way in now... Watch yourself! There's a lot of fire coming
+                                from the right side of that deflection tower. I'm on it. Squad leaders, we've picked up a
+                                new group of signals. Enemy fighters coming your way.</p>
+                        </div>
+                    </div>
+                    {{!-- /.inner-card --}}
                 </div>
             </div>
-            {{!-- /.card --}}
+            <div class="add-card-btn-wrapper grey lighten-3">
+                <div class="add-card-btn card-content">Add a card...</div>
+            </div>
         </div>
-        {{!-- /.col --}}
-        <div class="col s1"></div>
-
+        {{!-- /.card --}}
+        <div class="card add-list-card outer-card">
+            <div class="add-list-btn card-content grey-text text-lighten-2">Add a list...</div>
+        </div>
+        {{!-- /.add-list-card --}}
     </div>
-    {{!-- /.row --}}
+    {{!-- /.container --}}
 </div>
-{{!-- /.container --}}

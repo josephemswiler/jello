@@ -1,32 +1,72 @@
 @import url('https://fonts.googleapis.com/css?family=Pacifico|Vibur');
-html, body {
+html,
+body {
     height: 100%;
-    width: 200%;
 }
 
 body {
     background-image: linear-gradient(to right bottom, #d1ccc0, #e2d7d1, #ece3e4, #f5f1f3, #ffffff);
-    background-image: url('./../img/bg-red-mt.jpg');
+    /* background-image: url('./../img/bg-red-mt.jpg'); */
     background-size: auto 100%;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: left top;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    max-height: 100%;
+}
+
+.wrapper {
+    height: 100%;
+    padding-bottom: 100px;
 }
 
 .brand-logo {
     font-family: 'Pacifico', cursive;
 }
 
-.col {
+.card-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    height: 100%;
+    max-height: 100%;
+}
+
+.outer-card {
+    margin: 10px 0px 0px 10px;
     width: 270px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.card-data {
+    overflow: auto;
+}
+
+.inner-card {
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
 .card-content {
     padding: 10px !important;
+    white-space: normal;
+    line-height: 20px;
 }
 
 .add-card-btn-wrapper {
     width: 100% !important;
+}
+
+.add-list-card {
+    background: rgba(0, 0, 0, .2)
+}
+
+.add-list-card:hover {
+    background: rgba(0, 0, 0, .4);
 }
 
 .underlined {
@@ -38,3 +78,48 @@ body {
         background-position: center;
     }
 }
+
+/* @media(max-height: 800px) {
+    .outer-card {
+        max-height: 88vh;
+    }
+    .card-data {
+        max-height: 78vh;
+    }
+}
+
+@media(max-height: 700px) {
+    .outer-card {
+        max-height: 86vh;
+    }
+    .card-data {
+        max-height: 76vh;
+    }
+}
+
+@media(max-height: 600px) {
+    .outer-card {
+        max-height: 83vh;
+    }
+    .card-data {
+        max-height: 73vh;
+    }
+}
+
+@media(max-height: 500px) {
+    .outer-card {
+        max-height: 80vh;
+    }
+    .card-data {
+        max-height: 70vh;
+    }
+}
+
+@media(max-height: 400px) {
+    .outer-card {
+        max-height: 75vh;
+    }
+    .card-data {
+        max-height: 65vh;
+    }
+} */
