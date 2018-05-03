@@ -1,8 +1,5 @@
 const connection = require('./connection.js')
 
-// insertOne()
-// updateOne()
-
 class ObjectRelationalMapping {
     constructor(table, columns) {
         this.table = table
@@ -66,8 +63,6 @@ class ObjectRelationalMapping {
             callback(result)
         })
     } //deleteOne
-}
+} //ObjectRelationalMapping
 
-let orm = new ObjectRelationalMapping('cards', ['text', 'list'])
-
-module.exports = orm
+module.exports = ObjectRelationalMapping
