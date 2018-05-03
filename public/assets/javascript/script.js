@@ -18,7 +18,7 @@
 
     $('.add-card-btn-wrapper').hover(function () {
         $(this)
-            .toggleClass('lighten-3 lighten-1 underlined')
+            .toggleClass('lighten-3 lighten-2 underlined')
     })
 
     $(document).on('click', '.add-card-btn', function () {
@@ -61,10 +61,11 @@
     })
 
     $(document).on('click', '.open-card-btn', function () {
-        addingCard = false
-
-        if ($('.open-card').text().trim() === '')
+        if ($('.open-card').text().trim() === '' && $(this).text() === 'Add')
             return
+
+        if ($('.open-card').text().trim() === '' && $(this).text() === 'Done')
+            $(this).closest('.inner-card-wrapper').remove()
 
         $(this).remove()
         $('.close-open-card').remove()
@@ -73,22 +74,78 @@
             .addClass('fas fa-times small-close hover-options close-card-wrapper')
 
         let edit = $('<i>')
-            .addClass('fas fa-pen-square hover-options')
+            .addClass('fas fa-edit hover-options')
+
+        $('.open-card p br').remove()
+        $('.open-card div br').remove()
 
         $('.open-card')
             .addClass('closed-card')
             .removeClass('open-card')
             .attr('contenteditable', 'false')
             .append(edit, close)
+
+        addingCard = false
+    })
+
+    $(document).on('click', '.fa-edit', function () {
+        addingCard = true
+
+        let button = $('<button>')
+            .addClass('open-card-btn waves-effect waves-light btn green darken-1 white-text')
+            .text('Done')
+
+        let close = $('<i>')
+            .addClass('fas fa-times close-open-card close-card-wrapper')
+
+        $('.hover-options').hide()
+
+        $(this)
+            .parent()
+            .removeClass('closed-card')
+            .addClass('open-card')
+
+        $(this)
+            .parent()
+            .attr('contenteditable', 'true')
+            .focus()
+            .select()
+
+        $(this)
+            .closest('.inner-card-wrapper')
+            .append(button, close)
+
     })
 
     $(document).on('mouseenter', '.closed-card', function () {
-        $(this).children('.hover-options').show()
+        $(this)
+            .children('.hover-options')
+            .show()
 
     })
 
     $(document).on('mouseleave', '.closed-card', function () {
-        $(this).children('.hover-options').hide()
+        $(this)
+            .children('.hover-options')
+            .hide()
+    })
+
+    $(document).on('mouseenter', '.ellipsis-btn', function () {
+        $(this)
+            .removeClass('lighten-3')
+            .addClass('lighten-2')
+
+    })
+
+    $(document).on('mouseleave', '.ellipsis-btn', function () {
+        $(this)
+            .addClass('lighten-3')
+            .removeClass('lighten-2')
+    })
+
+
+    $(document).on('click', '.ellipsis-btn', function () {
+
     })
 
 

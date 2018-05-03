@@ -83,6 +83,10 @@ body {
     box-shadow: none;
 }
 
+.open-card-btn {
+    margin-bottom: 8px;
+}
+
 .closed-card {
     position:relative;
 }
@@ -116,21 +120,34 @@ body {
     position: absolute;
     z-index: 3;
     display: none;
-    top: 10px;
+    top: 2px;
 }
 
 .small-close {
     right: 10px;
 }
 
-.fa-pen-square {
+.fa-edit {
     right: 40px;
     opacity: .4;
 }
 
 .fa-times:hover,
-.fa-pen-square:hover {
+.fa-edit:hover {
     opacity: .8;
+}
+
+.ellipsis-btn {
+border-radius: 4px;
+padding: 0px 5px 0px 5px;
+height: 20px;
+line-height: 11px;
+text-align: center;
+vertical-align: middle;
+}
+
+.ellipsis-btn i {
+
 }
 
 @media(max-width: 992px) {
