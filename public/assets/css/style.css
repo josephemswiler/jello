@@ -6,8 +6,8 @@ body {
 
 body {
     background-image: linear-gradient(to right bottom, #d1ccc0, #e2d7d1, #ece3e4, #f5f1f3, #ffffff);
-    /* background-image: url('./../img/bg-red-mt.jpg'); */
-    background-size: auto 100%;
+    background-image: url('./../img/bg-red-mt.jpg');
+    background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: left top;
@@ -73,53 +73,29 @@ body {
     text-decoration: underline;
 }
 
+.open-card {
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.fa-times {
+    margin-left: 10px;
+    font-size: 30px;
+    vertical-align: middle;
+    opacity: .4;
+}
+
+.fa-times:hover {
+    opacity: .8;
+}
+
 @media(max-width: 992px) {
     body {
         background-position: center;
     }
 }
-
-/* @media(max-height: 800px) {
-    .outer-card {
-        max-height: 88vh;
-    }
-    .card-data {
-        max-height: 78vh;
-    }
-}
-
-@media(max-height: 700px) {
-    .outer-card {
-        max-height: 86vh;
-    }
-    .card-data {
-        max-height: 76vh;
-    }
-}
-
-@media(max-height: 600px) {
-    .outer-card {
-        max-height: 83vh;
-    }
-    .card-data {
-        max-height: 73vh;
-    }
-}
-
-@media(max-height: 500px) {
-    .outer-card {
-        max-height: 80vh;
-    }
-    .card-data {
-        max-height: 70vh;
-    }
-}
-
-@media(max-height: 400px) {
-    .outer-card {
-        max-height: 75vh;
-    }
-    .card-data {
-        max-height: 65vh;
-    }
-} */

@@ -69,16 +69,13 @@
                     </a>
                 </div>
                 <div class="card-data">
-                    <div class="card inner-card">
+                    {{#each card}}
+                    <div id="{{id}}" class="card inner-card">
                         <div class="card-content">
-                            <p>We count thirty Rebel ships, Lord Vader. But they're so small they're evading our turbo-lasers!
-                                We'll have to destroy them ship to ship. Get the crews to their fighters. Luke, let me know
-                                when you're going in. I'm on my way in now... Watch yourself! There's a lot of fire coming
-                                from the right side of that deflection tower. I'm on it. Squad leaders, we've picked up a
-                                new group of signals. Enemy fighters coming your way.</p>
+                            <p>{{text}}</p>
                         </div>
                     </div>
-                    {{!-- /.inner-card --}}
+                    {{/each}}
                 </div>
             </div>
             <div class="add-card-btn-wrapper grey lighten-3">
