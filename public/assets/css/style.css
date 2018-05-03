@@ -83,14 +83,53 @@ body {
     box-shadow: none;
 }
 
-.fa-times {
+.closed-card {
+    position:relative;
+}
+
+.closed-card:after {
+    content:'\A';
+    position:absolute;
+    width:100%; 
+    height:100%;
+    top:0; 
+    left:0;
+    background:rgba(255,255,255,0.5);
+    opacity:0;
+    transition: all 0.5s;
+    
+    -webkit-transition: all 0.5s;
+}
+.closed-card:hover:after {
+    opacity:1;
+}
+
+.close-card-wrapper {
     margin-left: 10px;
     font-size: 30px;
     vertical-align: middle;
     opacity: .4;
 }
 
-.fa-times:hover {
+.hover-options {
+    font-size: 20px;
+    position: absolute;
+    z-index: 3;
+    display: none;
+    top: 10px;
+}
+
+.small-close {
+    right: 10px;
+}
+
+.fa-pen-square {
+    right: 40px;
+    opacity: .4;
+}
+
+.fa-times:hover,
+.fa-pen-square:hover {
     opacity: .8;
 }
 
