@@ -1,5 +1,5 @@
-INSERT INTO cards (text, list) VALUES ('Add drag-and-drop functionality', 'Ideas');
-INSERT INTO cards (text, list) VALUES ('Setup SQL on Heroku', 'To Do');
-INSERT INTO cards (text, list) VALUES ('Connect MySQL to Node JS', 'Doing');
-INSERT INTO cards (text, list) VALUES ('Initialize repository structure', 'Done');
-
+INSERT INTO boards (name) VALUES ('Jello Project');
+INSERT INTO lists (name, board_id) VALUES ('Ideas', 1);
+INSERT INTO lists (name, board_id) VALUES ('To Do', 1);
+INSERT INTO cards (text, list_id) VALUES ('Add jQuery UI', 1);
+INSERT INTO cards (text, list_id) VALUES ('Update ORM to Sequelize', 2);
