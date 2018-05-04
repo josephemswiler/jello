@@ -1,5 +1,5 @@
-CREATE DATABASE trello_db;
-USE trello_db;
+CREATE DATABASE jello_db;
+USE jello_db;
 
 CREATE TABLE cards
 (

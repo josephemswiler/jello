@@ -2,7 +2,7 @@
     <div class="navbar-fixed">
         <nav>
             <div class="nav-wrapper grey">
-                <a href="#!" class="brand-logo center">Trello Clone</a>
+                <a href="#!" class="brand-logo center">Jello</a>
                 <a href="#" data-target="mobile-sidenav" class="sidenav-trigger">
                     <i class="fas fa-bars"></i>
                 </a>
@@ -60,7 +60,7 @@
     </ul>
     {{!-- /.sidenav --}}
     <div class="container left card-wrapper">
-        {{#each list}}
+        {{#each obj}} 
         <div class="card outer-card active-card">
             <div class="card-content grey lighten-3">
                 <div class="card-name">
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="card-data">
-                    {{#each cards}}
+                    {{#each card}}
                     <div id="{{id}}" class="card inner-card">
                         <div class="card-content">
                             <p>{{text}}</p>
