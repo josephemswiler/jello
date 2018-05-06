@@ -8,7 +8,9 @@
                 </a>
                 <ul class="left hide-on-med-and-down">
                     <li class="active">
-                        <a href="#">Boards</a>
+                        <a class="dropdown-trigger" href="#!" data-target="dropdown">Boards
+                            <i class="material-icons right">arrow_drop_down</i>
+                        </a>
                     </li>
                     <li>
                         <a href="#">About</a>
@@ -34,9 +36,24 @@
         </nav>
     </div>
     {{!-- /.navbar-fixed --}}
+    <ul id="dropdown" class="dropdown-content">
+        <li>
+            <a class="red-text drop-1" href="#!">Jello Project</a>
+        </li>
+        <li>
+            <a class="red-text drop-2" href="#!">Other Project</a>
+        </li>
+        <li>
+            <a class="red-text drop-3" href="#!">New Project</a>
+        </li>
+    </ul>
+    {{!-- /#dropdown --}}
     <ul id="mobile-sidenav" class="sidenav left">
         <li class="active">
-            <a href="#">Boards</a>
+            <a class="dropdown-trigger" href="#!" data-target="mobile-dropdown">Boards
+                <i class="material-icons right">arrow_drop_down</i>
+            </a>
+
         </li>
         <li>
             <a href="#">About</a>
@@ -59,15 +76,27 @@
         </li>
     </ul>
     {{!-- /.sidenav --}}
+    <ul id="mobile-dropdown" class="dropdown-content">
+        <li>
+            <a class="red-text drop-1" href="#!">Jello Project</a>
+        </li>
+        <li>
+            <a class="red-text drop-2" href="#!">Other Project</a>
+        </li>
+        <li>
+            <a class="red-text drop-3" href="#!">New Project</a>
+        </li>
+    </ul>
+    {{!-- /#mobile-dropdown --}}
     <div class="container left card-wrapper">
-        {{!-- {{#each obj}}  --}}
+        {{!-- {{#each obj}} --}}
         <div class="card outer-card active-card">
             <div class="card-content grey lighten-3">
                 <div class="card-name">
-                    <strong>{{list}}</strong>
-                    <div class="grey grey-text ellipsis-btn right center-align lighten-3" href="#modal-Ideas">
+                    <strong>Link this title</strong>
+                    <a class="grey grey-text ellipsis-btn right center-align lighten-3" href="#modal-Ideas">
                         ...
-                    </div>
+                    </a>
                 </div>
                 <div class="card-data">
                     {{!-- {{#each card}}
@@ -83,8 +112,7 @@
                 <div class="add-card-btn card-content">Add a card...</div>
             </div>
         </div>
-        {{!-- {{/each}}  --}}
-        {{!-- /.card --}}
+        {{!-- {{/each}} --}} {{!-- /.card --}}
         <div class="card add-list-card outer-card">
             <div class="add-list-btn card-content grey-text text-lighten-2">Add a list...</div>
         </div>

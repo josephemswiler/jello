@@ -4,7 +4,7 @@ let connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'trello_db'
+  database: 'jello_db'
 })
 
 connection.connect(function(err) {

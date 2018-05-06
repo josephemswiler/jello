@@ -1,7 +1,9 @@
 (function () {
-    //dynamically set max-height of list based on window size
-    let addingCard = false
 
+    let addingCard = false
+    let currentText = ''
+
+    //dynamically set max-height of list based on window size
     function setHeight() {
         let innerHeight = $(window).height() - 200
         $('.card-data').css('max-height', innerHeight)
@@ -15,6 +17,7 @@
     //materialize responsive elements
     $('.sidenav').sidenav()
     $('.tooltipped').tooltip()
+    $(".dropdown-trigger").dropdown()
 
     $('.add-card-btn-wrapper').hover(function () {
         $(this)
@@ -41,7 +44,8 @@
             .addClass('card inner-card')
             .append(content)
         let close = $('<i>')
-            .addClass('fas fa-times close-open-card close-card-wrapper')
+            .addClass('material-icons close-btn close-open-card close-card-wrapper')
+            .text('close')
         let button = $('<button>')
             .addClass('open-card-btn waves-effect waves-light btn green darken-1 white-text')
             .text('Add')
@@ -55,24 +59,34 @@
     })
 
     $(document).on('click', '.close-card-wrapper', function () {
+
+        if ($('.open-card').text().trim() !== '' && $(this).siblings('.open-card-btn').text() === 'Done') {
+
+            $('.open-card')
+                .text(currentText)
+
+            makeCard()
+
+            $(this)
+                .siblings('.open-card-btn')
+                .remove()
+
+            $(this)
+                .remove()
+
+            addingCard = false
+
+            return
+        }
+
         $(this).closest('.inner-card-wrapper').remove()
 
         addingCard = false
     })
 
-    $(document).on('click', '.open-card-btn', function () {
-        if ($('.open-card').text().trim() === '' && $(this).text() === 'Add')
-            return
-
-        if ($('.open-card').text().trim() === '' && $(this).text() === 'Done')
-            $(this).closest('.inner-card-wrapper').remove()
-
-        $(this).remove()
-        $('.close-open-card').remove()
-
+    function makeCard() {
         let close = $('<i>')
-            .addClass('fas fa-times small-close hover-options close-card-wrapper')
-
+            .addClass('fas fa-times close-btn small-close hover-options close-card-wrapper')
         let edit = $('<i>')
             .addClass('fas fa-edit hover-options')
 
@@ -86,18 +100,33 @@
             .append(edit, close)
 
         addingCard = false
+    }
+
+    $(document).on('click', '.open-card-btn', function () {
+        if ($('.open-card').text().trim() === '' && $(this).text() === 'Add')
+            return
+
+        if ($('.open-card').text().trim() === '' && $(this).text() === 'Done')
+            $(this).closest('.inner-card-wrapper').remove()
+
+        $(this).remove()
+        $('.close-open-card').remove()
+
+        makeCard()
     })
 
     $(document).on('click', '.fa-edit', function () {
         addingCard = true
+
+        currentText = $(this).parent().text()
 
         let button = $('<button>')
             .addClass('open-card-btn waves-effect waves-light btn green darken-1 white-text')
             .text('Done')
 
         let close = $('<i>')
-            .addClass('fas fa-times close-open-card close-card-wrapper')
-
+            .addClass('material-icons close-btn close-open-card close-card-wrapper')
+            .text('close')
         $('.hover-options').hide()
 
         $(this)

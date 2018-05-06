@@ -113,8 +113,9 @@ body {
 
 .close-card-wrapper {
     margin-left: 10px;
-    font-size: 30px;
+    font-size: 40px;
     vertical-align: middle;
+    padding-bottom: 6px;
     opacity: .4;
 }
 
@@ -123,7 +124,7 @@ body {
     position: absolute;
     z-index: 3;
     display: none;
-    top: 2px;
+    top: 0px;
 }
 
 .small-close {
@@ -135,8 +136,9 @@ body {
     opacity: .4;
 }
 
-.fa-times:hover,
+.close-btn:hover,
 .fa-edit:hover {
+    color: #f44336;
     opacity: .8;
 }
 
