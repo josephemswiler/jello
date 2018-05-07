@@ -6,7 +6,7 @@
 
     //dynamically set max-height of list based on window size
     function setHeight() {
-        let innerHeight = $(window).height() - 200
+        let innerHeight = $(window).height() - 250
         $('.card-data').css('max-height', innerHeight)
     }
     $(document).ready(setHeight())
@@ -20,10 +20,7 @@
     $('.tooltipped').tooltip()
     $(".dropdown-trigger").dropdown()
 
-    $('.add-card-btn-wrapper').hover(function () {
-        $(this)
-            .toggleClass('lighten-3 lighten-2 underlined')
-    })
+
 
     //add card
     $(document).on('click', '.add-card-btn', function () {
@@ -56,7 +53,7 @@
             .append(div)
             .append(button, close)
 
-        $('.card-data').append(wrapper)
+        $(this).closest('.outer-card').find('.card-data').append(wrapper)
         $('.open-card').focus().select()
     })
 
@@ -126,7 +123,153 @@
     })
 
     //add list
-    $(document).on('click', '.add-list-btn', function() {
+    $(document).on('click', '.add-list-btn', function () {
+
+        if (addingCard) {
+            return
+        }
+
+        addingCard = true
+
+        $(this).closest('.add-list-card').animate({
+            backgroundColor: 'rgba(238,238,238,1)',
+            height: '150px'
+        }, 500, function () {
+            $(this)
+                .closest('.add-list-card')
+                .append(div)
+
+            div.fadeIn(function () {
+                $('#new-list')
+                    .focus()
+                    .select()
+            })
+        })
+
+        $(this).animate({
+            opacity: 0
+        }, 500, function () {
+            $(this)
+                .hide()
+        })
+
+        addingCard = true
+
+        let label = $('<label>')
+            .attr('for', 'new-list')
+            .text('Add a list...')
+
+        let input = $('<input>')
+            .attr({
+                'id': 'new-list',
+                'type': 'text'
+            })
+
+        let field = $('<div>')
+            .addClass('input-field')
+            .append(input, label)
+
+        let form = $('<form>')
+            .append(field)
+
+        let button = $('<button>')
+            .addClass('save-list-btn waves-effect waves-light btn green darken-1 white-text')
+            .text('Save')
+
+        let close = $('<i>')
+            .addClass('material-icons close-btn close-save-list close-card-wrapper')
+            .text('close')
+
+        let div = $('<div>')
+            .addClass('card-content save-new-list-div')
+            .css('display', 'none')
+            .append(form, button, close)
+    })
+
+    $(document).mouseup(function (event) {
+        var container = $('.add-list-card')
+
+        if (!container.is(event.target) && container.has(event.target).length === 0) {
+            resetAddList()
+        }
+    })
+
+    function resetAddList() {
+        $('.save-new-list-div').fadeOut(function () {
+            $('.add-list-card').animate({
+                backgroundColor: 'rgba(0, 0, 0, .2)',
+                height: '40px'
+            }, 500, function () {
+                $('.save-new-list-div').remove()
+            })
+
+            $('.add-list-btn').show()
+            $('.add-list-btn').animate({
+                opacity: 1
+            }, 500)
+        })
+        addingCard = false
+    }
+
+    $(document).on('click', '.close-save-list', function () {
+        resetAddList()
+    })
+
+    $(document).on('click', '.save-list-btn', function () {
+
+        if ($('#new-list').val().trim() === '') {
+            resetAddList()
+            return
+        } //here animate add cards
+
+        addingCard = false
+
+        let addText = $('<div>')
+            .addClass('add-card-btn card-content')
+            .text('Add a card...')
+
+        let addCard = $('<div>')
+            .addClass('add-card-btn-wrapper grey lighten-3')
+            .append(addText)
+
+        let cardData = $('<div>')
+            .addClass('card-data')
+
+        let a = $('<a>')
+            .addClass('grey grey-text ellipsis-btn right center-align lighten-3 dropdown-trigger')
+            .attr({
+                'href': '#!',
+                'data-target': 'rename-card-dropdown'
+            })
+            .text('...')
+
+        let strong = $('<strong>')
+            .addClass('list-name')
+            .attr('contenteditable', 'true')
+            .text($('#new-list').val().trim())
+
+        let name = $('<div>')
+            .addClass('card-name')
+            .append(strong, a)
+
+        let content = $('<div>')
+            .addClass('card-content grey lighten-3')
+            .append(name, cardData)
+
+        let outerCard = $('<div>')
+            .css('display', 'none')
+            .addClass('card outer-card active-card')
+            .append(content, addCard)
+
+        resetAddList()
+
+        $('.add-list-card').animate({
+            left: '278px'
+        }, 500, function () {
+            $('.add-list-card').css('left', '0px')
+            outerCard.insertBefore('.add-list-card')
+            outerCard.fadeIn()
+        })
 
     })
 
@@ -153,7 +296,7 @@
         }
     })
 
-    $(document).on('click', '.rename-board-btn', function(event) {
+    $(document).on('click', '.rename-board-btn', function (event) {
         event.preventDefault()
 
         $('.board-title').children('.card-content').text($('#board-rename-input').val().trim())
@@ -163,7 +306,7 @@
 
     //edit card content
     $(document).on('click', '.fa-edit', function () {
-        if(addingCard) {
+        if (addingCard) {
             if ($('.open-card').text().trim() === '') {
                 $('.open-card').closest('.inner-card-wrapper').remove()
             } else {
@@ -184,6 +327,7 @@
         let close = $('<i>')
             .addClass('material-icons close-btn close-open-card close-card-wrapper')
             .text('close')
+
         $('.hover-options').hide()
 
         $(this)
@@ -200,6 +344,16 @@
         $(this)
             .closest('.inner-card-wrapper')
             .append(button, close)
+    })
+
+    $(document).on('mouseenter', '.add-card-btn-wrapper', function () {
+        $(this)
+            .toggleClass('lighten-3 lighten-2 underlined')
+    })
+
+    $(document).on('mouseleave', '.add-card-btn-wrapper', function () {
+        $(this)
+            .toggleClass('lighten-3 lighten-2 underlined')
     })
 
     $(document).on('mouseenter', '.closed-card', function () {

@@ -20,34 +20,7 @@ router.get("/", function (req, res) {
             obj: data
         }
 
-        //list 
-            //list id
-            //list name
-            //board id
-
-        //boards
-            //board id
-            //board name
-
-        //text, create new id, ref list id on
-
-        // let lists = []
-
-        // for (let i in data) {
-        //     lists.push(data[i].list)
-        // }
-
-        // let uniqueLists = [...new Set(lists)]
-
-        // let listObj = {}
-
-        // for (let i in uniqueLists) {
-        //     listObj['name'] = uniqueLists[i]
-        // } 
-        // obj, list, id, text
-        // console.log(listObj)
-
-        // obj[list] = listObj
+        
 
         console.log(cards)
 
