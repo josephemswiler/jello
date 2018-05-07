@@ -88,13 +88,40 @@
         </li>
     </ul>
     {{!-- /#mobile-dropdown --}}
+    <div class="board-wrapper">
+        <div class="card board-title outer-card">
+                <div class="card-content grey-text text-lighten-2">Board Name</div>
+        </div>
+        <div class="card board-star outer-card">
+            <a class="card-content board-fav-star grey-text text-lighten-2 material-icons">star_border</a>
+        </div>
+    </div>
+    <div class="rename-board card animated flipInX">
+        <div class="card-content grey-text center-align">Rename Board
+            <div class="right-align close-rename">
+                <i class="material-icons">close</i>
+            </div>
+            <hr>
+            <div class="row left-align">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="board-rename-input" type="text" class="validate">
+                            <label for="board-rename-input">Name</label>
+                        </div>
+                    </div>
+                    <button class="rename-board-btn waves-effect waves-light btn green darken-1 white-text">Rename</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="container left card-wrapper">
         {{!-- {{#each obj}} --}}
         <div class="card outer-card active-card">
             <div class="card-content grey lighten-3">
                 <div class="card-name">
-                    <strong>Link this title</strong>
-                    <a class="grey grey-text ellipsis-btn right center-align lighten-3" href="#modal-Ideas">
+                    <strong class="list-name">Link this title</strong>
+                    <a class="grey grey-text ellipsis-btn right center-align lighten-3 dropdown-trigger" href="#!" data-target="rename-card-dropdown">
                         ...
                     </a>
                 </div>
@@ -119,4 +146,15 @@
         {{!-- /.add-list-card --}}
     </div>
     {{!-- /.container --}}
+        <div id="rename-card-dropdown" class="dropdown-content rename-card card">
+        <div class="card-content grey-text center-align">List Actions
+            <div class="right-align close-rename">
+                <i class="material-icons">close</i>
+            </div>
+            <hr>
+            <ul>
+                <li><a class="red-text add-card-btn" href="#">Add Card...</a></li>
+            </ul>
+        </div>
+    </div>
 </div>

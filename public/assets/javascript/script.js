@@ -3,6 +3,7 @@
     let addingCard = false
     let currentText = ''
 
+
     //dynamically set max-height of list based on window size
     function setHeight() {
         let innerHeight = $(window).height() - 200
@@ -24,6 +25,7 @@
             .toggleClass('lighten-3 lighten-2 underlined')
     })
 
+    //add card
     $(document).on('click', '.add-card-btn', function () {
         if (addingCard)
             return
@@ -44,10 +46,10 @@
             .addClass('card inner-card')
             .append(content)
         let close = $('<i>')
-            .addClass('material-icons close-btn close-open-card close-card-wrapper')
+            .addClass('material-icons adding close-btn close-open-card close-card-wrapper')
             .text('close')
         let button = $('<button>')
-            .addClass('open-card-btn waves-effect waves-light btn green darken-1 white-text')
+            .addClass('open-card-btn adding waves-effect waves-light btn green darken-1 white-text')
             .text('Add')
         let wrapper = $('<div>')
             .addClass('inner-card-wrapper')
@@ -102,6 +104,14 @@
         addingCard = false
     }
 
+    $(document).on('click', '.board-fav-star', function () {
+        if ($(this).text() === 'star_border') {
+            $(this).text('star')
+        } else {
+            $(this).text('star_border')
+        }
+    })
+
     $(document).on('click', '.open-card-btn', function () {
         if ($('.open-card').text().trim() === '' && $(this).text() === 'Add')
             return
@@ -115,7 +125,54 @@
         makeCard()
     })
 
+    //add list
+    $(document).on('click', '.add-list-btn', function() {
+
+    })
+
+    //edit board title
+    $(document).on('click', '.board-title', function () {
+        $('.rename-board').show()
+
+        $('#board-rename-input')
+            .val($(this).children('.card-content').text())
+            .focus()
+            .select()
+    })
+
+    $(document).on('click', '.close-rename', function () {
+        $('.rename-board')
+            .hide()
+    })
+
+    $(document).mouseup(function (event) {
+        var container = $('.rename-board')
+
+        if (!container.is(event.target) && container.has(event.target).length === 0) {
+            container.hide()
+        }
+    })
+
+    $(document).on('click', '.rename-board-btn', function(event) {
+        event.preventDefault()
+
+        $('.board-title').children('.card-content').text($('#board-rename-input').val().trim())
+
+        $('.rename-board').hide()
+    })
+
+    //edit card content
     $(document).on('click', '.fa-edit', function () {
+        if(addingCard) {
+            if ($('.open-card').text().trim() === '') {
+                $('.open-card').closest('.inner-card-wrapper').remove()
+            } else {
+                makeCard()
+                $('.adding')
+                    .remove()
+            }
+        }
+
         addingCard = true
 
         currentText = $(this).parent().text()
@@ -143,14 +200,12 @@
         $(this)
             .closest('.inner-card-wrapper')
             .append(button, close)
-
     })
 
     $(document).on('mouseenter', '.closed-card', function () {
         $(this)
             .children('.hover-options')
             .show()
-
     })
 
     $(document).on('mouseleave', '.closed-card', function () {
@@ -159,11 +214,11 @@
             .hide()
     })
 
+    //rename list
     $(document).on('mouseenter', '.ellipsis-btn', function () {
         $(this)
             .removeClass('lighten-3')
             .addClass('lighten-2')
-
     })
 
     $(document).on('mouseleave', '.ellipsis-btn', function () {
@@ -172,10 +227,22 @@
             .removeClass('lighten-2')
     })
 
-
-    $(document).on('click', '.ellipsis-btn', function () {
-
+    $(document).on('click', '.list-name', function () {
+        $(this)
+            .attr('contenteditable', 'true')
+            .focus()
+            .select()
     })
 
+    $(document).mouseup(function (event) {
+        var container = $('.list-name')
 
+        if (!container.is(event.target) && container.has(event.target).length === 0) {
+            $('.list-name br').remove()
+
+            container
+                .attr('contenteditable', 'false')
+
+        }
+    })
 })() //IIFE

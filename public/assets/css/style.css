@@ -64,11 +64,55 @@ body {
     width: 100% !important;
 }
 
+.board-title,
+.board-star {
+    background: rgba(0, 0, 0, 0);
+    box-shadow: none;
+    font-size: 18px;
+    font-weight: bold;
+    width: auto;
+}
+
+.close-rename {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.dropdown-content {
+    width: auto !important;
+}
+
+.rename-board {
+    position: absolute;
+    font-size: 14px;
+    font-weight: normal;
+    width: 300px !important;
+    display: none;
+    z-index: 3;
+    left: 8px;
+}
+
+.rename-card {
+    width: 300px !important;
+}
+
+.input-field input[type=text]:focus + label {
+    color: #f44336 !important;
+  }
+
+  .input-field input[type=text]:focus {
+    border-bottom: 1px solid #f44336 !important;
+    box-shadow: 0 1px 0 0 #f44336 !important;
+  }
+
 .add-list-card {
     background: rgba(0, 0, 0, .2)
 }
 
-.add-list-card:hover {
+.add-list-card:hover,
+.board-title:hover,
+.board-star:hover {
     background: rgba(0, 0, 0, .4);
 }
 
