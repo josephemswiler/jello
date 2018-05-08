@@ -12,6 +12,10 @@
 
     // })
 
+    $(document).ajaxComplete(function() {
+        initDrag()
+    })
+
     let addingCard = false
     let currentText = ''
     let cardOpen = false
@@ -97,8 +101,9 @@
             .append(edit, close)
 
         addingCard = false
-
         cardOpen = false
+
+        initDrag()
     }
 
     $(document).on('click', '.board-fav-star', function () {
@@ -565,31 +570,49 @@
 
     //jQuery UI
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
-    $('.inner-card-wrapper').draggable({
-        appendTo: "body",
-        cursor: "move",
-        helper: 'clone',
-        revert: "invalid"
-    })
+    function initDrag() {
+        $('.inner-card-wrapper').draggable({
+            appendTo: 'body',
+            cursor: 'move',
+            helper: 'clone',
+            revert: 'invalid'
+        })
 
-    $('.card-content').droppable({
-        tolerance: 'intersect',
-        accept: '.inner-card-wrapper',
-        activeClass: 'ui-state-default',
-        hoverClass: 'ui-state-hover',
-        drop: function(event, ui) {        
-            $(this).children('.card-data').append($(ui.draggable))
-        }
-    })
+        $('.card-content').droppable({
+            tolerance: 'intersect',
+            accept: '.inner-card-wrapper',
+            activeClass: 'ui-state-default',
+            hoverClass: 'ui-state-hover',
+            drop: function(event, ui) {        
+                $(this).children('.card-data').append($(ui.draggable))
+                updateList($(this).closest('.outer-card')[0].dataset.id, $(ui.draggable)[0].dataset.id, $(ui.draggable).text().trim())
+            }
+        })
+    
+        $('.add-card-btn-wrapper').droppable({
+            tolerance: 'intersect',
+            accept: '.inner-card-wrapper',
+            activeClass: 'ui-state-default',
+            hoverClass: 'ui-state-hover',
+            drop: function(event, ui) {        
+                $(this).siblings('.card-content').children('.card-data').append($(ui.draggable))
+                updateList($(this).closest('.outer-card')[0].dataset.id, $(ui.draggable)[0].dataset.id, $(ui.draggable).text().trim())
+            }
+        })
+    }
+   
+    initDrag()
 
-    $('.add-card-btn-wrapper').droppable({
-        tolerance: 'intersect',
-        accept: '.inner-card-wrapper',
-        activeClass: 'ui-state-default',
-        hoverClass: 'ui-state-hover',
-        drop: function(event, ui) {        
-            $(this).siblings('.card-content').children('.card-data').append($(ui.draggable))
-        }
-    })
+    function updateList(listId, cardId, cardText) {
+        console.log(listId, cardId, cardText)
+
+        dbUpdate('cards', {
+            id: cardId,
+            text: cardText,
+            list_id: listId,
+            starred: 0
+        })
+
+    }
 
 })() //IIFE
