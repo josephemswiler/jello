@@ -144,10 +144,21 @@
             return
         }
 
-        dbCreateCard('cards', {
-            text: $('.open-card').text().trim(),
-            list_id: $(this).closest('.active-card')[0].dataset.id
-        })
+        if ($(this).text() === 'Add') {
+            dbCreateCard('cards', {
+                text: $('.open-card').text().trim(),
+                list_id: $(this).closest('.active-card')[0].dataset.id
+            })
+        }
+
+        if ($(this).text() === 'Done') {
+            dbUpdate('cards', {
+                id: $(this).closest('.inner-card-wrapper')[0].dataset.id,
+                text: $('.open-card').text().trim(),
+                list_id: $(this).closest('.active-card')[0].dataset.id,
+                starred: 0
+            })
+        }
 
         $(this).remove()
         $('.close-open-card').remove()
