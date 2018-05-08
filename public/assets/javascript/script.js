@@ -1,21 +1,4 @@
 (function () {
-
-//here
-    // $(document).ready(function () {
-
-    //     $(document).on('click', '.change-board', function () {
-
-    //         $.get(`/${$(this)[0].dataset.id}`, function (data) {
-    //             console.log(data)
-    //         })
-    //     })
-
-    // })
-
-    $(document).ajaxComplete(function() {
-        initDrag()
-    })
-
     let addingCard = false
     let currentText = ''
     let cardOpen = false
@@ -38,7 +21,7 @@
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.add-card-btn', function () {
 
-        if (addingCard) //here also, jQuery UI, deploy heroku, boards, delete cardOpen, check validation, animate add cards
+        if (addingCard)
             return
 
         addingCard = true
@@ -602,6 +585,10 @@
     }
    
     initDrag()
+
+    $(document).ajaxComplete(function() {
+        initDrag()
+    })
 
     function updateList(listId, cardId, cardText) {
         console.log(listId, cardId, cardText)

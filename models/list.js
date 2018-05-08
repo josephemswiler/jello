@@ -2,10 +2,7 @@ module.exports = function (sequelize, DataTypes) {
     let Lists = sequelize.define("Lists", {
         name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            // validate: {
-            //     len: [1, 40]
-            // }
+            allowNull: false
         },
         board_id: {
             type: DataTypes.INTEGER,

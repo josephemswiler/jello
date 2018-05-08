@@ -2,10 +2,7 @@ module.exports = function (sequelize, DataTypes) {
     let Boards = sequelize.define("Boards", {
         name: {
             type: DataTypes.STRING,
-            allowNull: false,
-            // validate: {
-            //     len: [1, 40]
-            // }
+            allowNull: false
         },
         starred: {
             type: DataTypes.BOOLEAN,
