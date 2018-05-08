@@ -37,15 +37,11 @@
     </div>
     {{!-- /.navbar-fixed --}}
     <ul id="dropdown" class="dropdown-content">
+        {{#each data}}
         <li>
-            <a class="red-text drop-1" href="#!">Jello Project</a>
+            <a class="red-text drop-{{id}}" href="#!">{{name}}</a>
         </li>
-        <li>
-            <a class="red-text drop-2" href="#!">Other Project</a>
-        </li>
-        <li>
-            <a class="red-text drop-3" href="#!">New Project</a>
-        </li>
+        {{/each}}
     </ul>
     {{!-- /#dropdown --}}
     <ul id="mobile-sidenav" class="sidenav left">
@@ -77,15 +73,11 @@
     </ul>
     {{!-- /.sidenav --}}
     <ul id="mobile-dropdown" class="dropdown-content">
+        {{#each data}}
         <li>
-            <a class="red-text drop-1" href="#!">Jello Project</a>
+            <a class="red-text drop-{{id}}" href="#!">{{name}}</a>
         </li>
-        <li>
-            <a class="red-text drop-2" href="#!">Other Project</a>
-        </li>
-        <li>
-            <a class="red-text drop-3" href="#!">New Project</a>
-        </li>
+        {{/each}}
     </ul>
     {{!-- /#mobile-dropdown --}}
     <div class="board-wrapper">

@@ -407,8 +407,8 @@
 
     function getBoards() {
         $.get("/api", function (data) {
-            console.log(data[0].id)
-
+            console.log(data)
+            // res.render(data)
         })
     }
 

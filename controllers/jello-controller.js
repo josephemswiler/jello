@@ -3,7 +3,52 @@ const db = require("../models");
 module.exports = function (app) {
 
     app.get('/', function (req, res) {
-            res.render('index')
+        db.Boards.findAll({
+            include: [
+              {
+                model: db.Lists,
+                include: [
+                  {
+                    model: db.Cards
+                  }
+                ]
+              }
+            ]
+          }).then(Boards => {
+            const boardData = Boards.map(Boards => {
+              return Object.assign(
+                {},
+                {
+                  id: Boards.id,
+                  name: Boards.name,
+                  starred: Boards.starred,
+                  Lists: Boards.Lists.map(Lists => {
+                    return Object.assign(
+                      {},
+                      {
+                        id: Lists.id,
+                        name: Lists.name,
+                        board: Lists.board_id,
+                        starred: Lists.starred,
+                        Cards: Lists.Cards.map(Cards => {
+                          return Object.assign(
+                            {},
+                            {
+                              id: Cards.id,
+                              text: Cards.text,
+                              list: Cards.list_id,
+                              starred: Cards.starred
+                            }
+                          )
+                        })
+                      }
+                      )
+                  })
+                }
+              )
+            })
+            res.render('index', { data: boardData })
+          })
     })
 
     app.get('/api', (req, res) => {  
