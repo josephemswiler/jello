@@ -3,8 +3,8 @@
     let addingCard = false
     let currentText = ''
 
-
-    //dynamically set max-height of list based on window size
+    //Dynamically set max-height of list based on window size
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     function setHeight() {
         let innerHeight = $(window).height() - 250
         $('.card-data').css('max-height', innerHeight)
@@ -15,14 +15,8 @@
         setHeight()
     })
 
-    //materialize responsive elements
-    $('.sidenav').sidenav()
-    $('.tooltipped').tooltip()
-    $(".dropdown-trigger").dropdown()
-
-
-
-    //add card
+    //Card - Add
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.add-card-btn', function () {
         if (addingCard)
             return
@@ -122,7 +116,51 @@
         makeCard()
     })
 
-    //add list
+    //Card - Edit Content
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+    $(document).on('click', '.fa-edit', function () {
+        if (addingCard) {
+            if ($('.open-card').text().trim() === '') {
+                $('.open-card').closest('.inner-card-wrapper').remove()
+            } else {
+                makeCard()
+                $('.adding')
+                    .remove()
+            }
+        }
+
+        addingCard = true
+
+        currentText = $(this).parent().text()
+
+        let button = $('<button>')
+            .addClass('open-card-btn waves-effect waves-light btn green darken-1 white-text')
+            .text('Done')
+
+        let close = $('<i>')
+            .addClass('material-icons close-btn close-open-card close-card-wrapper')
+            .text('close')
+
+        $('.hover-options').hide()
+
+        $(this)
+            .parent()
+            .removeClass('closed-card')
+            .addClass('open-card')
+
+        $(this)
+            .parent()
+            .attr('contenteditable', 'true')
+            .focus()
+            .select()
+
+        $(this)
+            .closest('.inner-card-wrapper')
+            .append(button, close)
+    })
+
+    //List - Add
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.add-list-btn', function () {
 
         if (addingCard) {
@@ -273,7 +311,28 @@
 
     })
 
-    //edit board title
+    //List - Edit Name
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+    $(document).on('click', '.list-name', function () {
+        $(this)
+            .attr('contenteditable', 'true')
+            .focus()
+            .select()
+    })
+
+    $(document).mouseup(function (event) {
+        var container = $('.list-name')
+
+        if (!container.is(event.target) && container.has(event.target).length === 0) {
+            $('.list-name br').remove()
+
+            container
+                .attr('contenteditable', 'false')
+        }
+    })
+
+    //Board - Edit Name
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.board-title', function () {
         $('.rename-board').show()
 
@@ -304,47 +363,11 @@
         $('.rename-board').hide()
     })
 
-    //edit card content
-    $(document).on('click', '.fa-edit', function () {
-        if (addingCard) {
-            if ($('.open-card').text().trim() === '') {
-                $('.open-card').closest('.inner-card-wrapper').remove()
-            } else {
-                makeCard()
-                $('.adding')
-                    .remove()
-            }
-        }
-
-        addingCard = true
-
-        currentText = $(this).parent().text()
-
-        let button = $('<button>')
-            .addClass('open-card-btn waves-effect waves-light btn green darken-1 white-text')
-            .text('Done')
-
-        let close = $('<i>')
-            .addClass('material-icons close-btn close-open-card close-card-wrapper')
-            .text('close')
-
-        $('.hover-options').hide()
-
-        $(this)
-            .parent()
-            .removeClass('closed-card')
-            .addClass('open-card')
-
-        $(this)
-            .parent()
-            .attr('contenteditable', 'true')
-            .focus()
-            .select()
-
-        $(this)
-            .closest('.inner-card-wrapper')
-            .append(button, close)
-    })
+    //Materialize - Responsive Elements & Additional Highlighting
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+    $('.sidenav').sidenav()
+    $('.tooltipped').tooltip()
+    $('.dropdown-trigger').dropdown()
 
     $(document).on('mouseenter', '.add-card-btn-wrapper', function () {
         $(this)
@@ -368,7 +391,6 @@
             .hide()
     })
 
-    //rename list
     $(document).on('mouseenter', '.ellipsis-btn', function () {
         $(this)
             .removeClass('lighten-3')
@@ -381,22 +403,113 @@
             .removeClass('lighten-2')
     })
 
-    $(document).on('click', '.list-name', function () {
-        $(this)
-            .attr('contenteditable', 'true')
-            .focus()
-            .select()
-    })
 
-    $(document).mouseup(function (event) {
-        var container = $('.list-name')
 
-        if (!container.is(event.target) && container.has(event.target).length === 0) {
-            $('.list-name br').remove()
+    function getBoards() {
+        $.get("/api", function (data) {
+            console.log(data[0].id)
 
-            container
-                .attr('contenteditable', 'false')
+        })
+    }
 
+    getBoards()
+
+    $(document).ready(function () {
+
+        let board = {
+            id: parseInt($('.board-title div').prop('id').replace(/[^0-9]/g, '')),
+            name: $('.board-title div').text().trim().replace(/\s+/g, '-')
         }
+
+        let list = {
+            name: 'List One',
+            board_id: 1
+        }
+
+        let card = {
+            text: 'Text of card one.',
+            list_id: 1
+        }
+
+        // ${board.id}/${board.name}
+
+        //here here here
+        // $.post('/api/boards', board, function (data) {
+        //     console.log(data)
+        // })
+
+        // $.post('/api/lists', list, function (data) {
+        //     console.log(data)
+        // })
+
+        // $.post('/api/cards', card, function (data) {
+        //     console.log(data)
+        // })
+
+        let newBoard = {
+            id: 1,
+            name: 'New Board',
+            starred: false
+        }
+
+        let newList = {
+            id: 2,
+            name: 'New List Name',
+            starred: false
+        }
+
+        let newCard = {
+            id: 1,
+            text: 'New card text.',
+            starred: false
+        }
+
+        // $.ajax({
+        //     method: 'PUT',
+        //     url: '/api/boards',
+        //     data: newBoard
+        // }).then(function (data) {
+        //     console.log(data)
+        // })
+
+        // $.ajax({
+        //     method: 'PUT',
+        //     url: '/api/lists',
+        //     data: newList
+        // }).then(function (data) {
+        //     console.log(data)
+        // })
+
+        // $.ajax({
+        //     method: 'PUT',
+        //     url: '/api/cards',
+        //     data: newCard
+        // }).then(function (data) {
+        //     console.log(data)
+        // })
+
+        let currentId = 1
+
+        // $.ajax({
+        //     method: "DELETE",
+        //     url: `/api/boards/${currentId}`
+        //   }).then(function(data) {
+        //       console.log(data)
+        //   })
+
+        //   $.ajax({
+        //     method: "DELETE",
+        //     url: `/api/lists/${currentId}`
+        //   }).then(function(data) {
+        //       console.log(data)
+        //   })
+
+        //   $.ajax({
+        //     method: "DELETE",
+        //     url: `/api/cards/${currentId}`
+        //   }).then(function(data) {
+        //       console.log(data)
+        //   })
     })
+
 })() //IIFE

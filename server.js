@@ -1,23 +1,26 @@
 const express = require('express')
 const app = express()
-const router = require('./controllers/jello-controller.js')
-const bodyParser = require('body-parser')
-const expressHandlebars = require("express-handlebars");
+const expressHandlebars = require("express-handlebars")
+const bodyParser = require("body-parser")
 const PORT = process.env.PORT || 3000
+const db = require("./models")
 
-app.listen(PORT, () => {
-    console.log(`App listening on PORT: ${PORT}!`)
-})
-
-app.use('/', router)
-
-app.use(express.static('./public/'))
-
-app.use(bodyParser.urlencoded({
-    extended: true
+app.engine("handlebars", expressHandlebars({
+    defaultLayout: "main"
 }))
+
+app.set("view engine", "handlebars")
+
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(bodyParser.json())
 
-app.engine("handlebars", expressHandlebars({ defaultLayout: "main" }))
-app.set("view engine", "handlebars")
+app.use(express.static("public"))
+
+require("./controllers/jello-controller.js")(app)
+
+db.sequelize.sync().then(function() {
+    app.listen(PORT, () => {
+        console.log(`App listening on PORT: ${PORT}!`)
+    })
+})
