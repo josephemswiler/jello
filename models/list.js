@@ -3,9 +3,9 @@ module.exports = function (sequelize, DataTypes) {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                len: [1, 40]
-            }
+            // validate: {
+            //     len: [1, 40]
+            // }
         },
         board_id: {
             type: DataTypes.INTEGER,

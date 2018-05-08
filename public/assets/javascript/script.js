@@ -1,9 +1,22 @@
 (function () {
 
+//here
+    // $(document).ready(function () {
+
+    //     $(document).on('click', '.change-board', function () {
+
+    //         $.get(`/${$(this)[0].dataset.id}`, function (data) {
+    //             console.log(data)
+    //         })
+    //     })
+
+    // })
+
     let addingCard = false
     let currentText = ''
     let cardOpen = false
     let updatingListId = null
+    let updatingBoardId = null
 
     //Dynamically set max-height of list based on window size
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
@@ -21,7 +34,7 @@
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.add-card-btn', function () {
 
-        if (addingCard) //here also, //here link crud ops, jQuery UI, deploy heroku, boards, delete cardOpen
+        if (addingCard) //here also, jQuery UI, deploy heroku, boards, delete cardOpen, check validation, animate add cards
             return
 
         addingCard = true
@@ -316,7 +329,7 @@
             resetAddList()
             cardOpen = false
             return
-        } //here animate add cards
+        } 
 
         addingCard = false
         cardOpen = false
@@ -401,7 +414,7 @@
 
             container
                 .attr('contenteditable', 'false')
-                
+
             if ($(`.card-wrapper [data-id="${updatingListId}"] strong`).text().trim() === '') {
                 $(`.card-wrapper [data-id="${updatingListId}"] strong`).text(currentText)
             }
@@ -429,7 +442,7 @@
 
     })
 
-    //Board - Edit Name
+    //Board - Update
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.board-title', function () {
         $('.rename-board').show()
@@ -438,6 +451,9 @@
             .val($(this).children('.card-content').text())
             .focus()
             .select()
+        
+        currentText = $('#board-rename-input').val()
+        updatingBoardId = $('.board-wrapper')[0].dataset.id
     })
 
     $(document).on('click', '.close-rename', function () {
@@ -456,7 +472,20 @@
     $(document).on('click', '.rename-board-btn', function (event) {
         event.preventDefault()
 
-        $('.board-title').children('.card-content').text($('#board-rename-input').val().trim())
+            if ($('#board-rename-input').val().trim() === '') {
+                $('.board-title').children('.card-content').text(currentText)
+            } else {
+                $('.board-title').children('.card-content').text($('#board-rename-input').val().trim())
+            }
+
+            dbUpdate('boards', {
+                id: updatingBoardId,
+                name: $('.board-title').children('.card-content').text(),
+                starred: 0
+            })
+
+            currentText = ''
+            updatingBoardId = null
 
         $('.rename-board').hide()
     })
@@ -533,18 +562,4 @@
             url: `/api/${table}/${id}`
         }).then(function (data) {})
     }
-
-    $(document).ready(function () {
-
-
-
-        $(document).on('click', '.change-board', function () {
-
-            $.get(`/${$(this)[0].dataset.id}`, function (data) {
-                console.log(data)
-            })
-        })
-
-    })
-
 })() //IIFE
