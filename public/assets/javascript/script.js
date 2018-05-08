@@ -20,7 +20,7 @@
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.add-card-btn', function () {
 
-        if (addingCard) //here also, //here link crud ops, jQuery UI, deploy heroku, boards
+        if (addingCard) //here also, //here link crud ops, jQuery UI, deploy heroku, boards, delete cardOpen
             return
 
         addingCard = true
@@ -78,12 +78,16 @@
 
             addingCard = false
 
+            cardOpen = false
+
             return
         }
 
         $(this).closest('.inner-card-wrapper').remove()
 
         addingCard = false
+
+        cardOpen = false
     })
 
     function makeCard() {
@@ -142,6 +146,8 @@
 
         addingCard = true
 
+        cardOpen = true
+
         currentText = $(this).parent().text()
 
         let button = $('<button>')
@@ -174,11 +180,13 @@
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.add-list-btn', function () {
 
-        if (addingCard) {
+        if (cardOpen) {
             return
         }
 
         addingCard = true
+
+        cardOpen = true
 
         $(this).closest('.add-list-card').animate({
             backgroundColor: 'rgba(238,238,238,1)',
@@ -238,6 +246,7 @@
 
         if (!container.is(event.target) && container.has(event.target).length === 0) {
             resetAddList()
+            cardOpen = false
         }
     })
 
@@ -255,21 +264,24 @@
                 opacity: 1
             }, 500)
         })
-        addingCard = false
+
     }
 
     $(document).on('click', '.close-save-list', function () {
         resetAddList()
+        cardOpen = false
     })
 
     $(document).on('click', '.save-list-btn', function () {
 
         if ($('#new-list').val().trim() === '') {
             resetAddList()
+            cardOpen = false
             return
         } //here animate add cards
 
         addingCard = false
+        cardOpen = false
 
         let addText = $('<div>')
             .addClass('add-card-btn card-content')
@@ -412,124 +424,42 @@
             .removeClass('lighten-2')
     })
 
-    function getBoards() {
-        $.get("/api", function (data) {
-            // console.log(data)
+    //db CRUD Functions
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+    function dbCreate(table, object) {
+        $.post(`/api/${table}`, object, function (data) {})
+    }
 
+    function dbRead(table) {
+        $.get(`/api/${table}`, function (data) {})
+    }
+
+    function dbUpdate(table, object) {
+        $.ajax({
+            method: 'PUT',
+            url: `/api/${table}`,
+            data: object
+        }).then(function (data) {})
+    }
+
+    function dbDelete(table, id) {
+        $.ajax({
+            method: 'DELETE',
+            url: `/api/${table}/${id}`
+        }).then(function (data) {
+            console.log(data)
         })
     }
 
-    getBoards()
-
-    $(document).on('click', '.change-board', function () {
-
-        $.get(`/${$(this)[0].dataset.id}`, function (data) {
-            // $(document).html(data)
-            //   console.log(data)
-            //     let newData = data.split('<div class="wrapper">')
-            //     let middleData = newData[1].split('<!-- jQuery (uncompressed) -->')
-            //     let result = middleData[0]
-            //     console.log(result.toString())
-            // $('.wrapper').children().remove().html(result.toString())
-        })
-    })
-
     $(document).ready(function () {
 
-        let board = {
-            id: parseInt($('.board-title div').prop('id').replace(/[^0-9]/g, '')),
-            name: $('.board-title div').text().trim().replace(/\s+/g, '-')
-        }
+        $(document).on('click', '.change-board', function () {
 
-        let list = {
-            name: 'List One',
-            board_id: 1
-        }
+            $.get(`/${$(this)[0].dataset.id}`, function (data) {
+                  console.log(data)
+            })
+        })
 
-        let card = {
-            text: 'Text of card one.', 
-            list_id: 5
-        }
-
-        // ${board.id}/${board.name}
-
-        //here here here
-        // $.post('/api/boards', board, function (data) {
-        //     console.log(data)
-        // })
-
-        // $.post('/api/lists', list, function (data) {
-        //     console.log(data)
-        // })
-
-        // $.post('/api/cards', card, function (data) {
-        //     console.log(data)
-        // })
-
-        let newBoard = {
-            id: 1,
-            name: 'New Board',
-            starred: false
-        }
-
-        let newList = {
-            id: 2,
-            name: 'New List Name',
-            starred: false
-        }
-
-        let newCard = {
-            id: 1,
-            text: 'New card text.',
-            starred: false
-        }
-
-        // $.ajax({
-        //     method: 'PUT',
-        //     url: '/api/boards',
-        //     data: newBoard
-        // }).then(function (data) {
-        //     console.log(data)
-        // })
-
-        // $.ajax({
-        //     method: 'PUT',
-        //     url: '/api/lists',
-        //     data: newList
-        // }).then(function (data) {
-        //     console.log(data)
-        // })
-
-        // $.ajax({
-        //     method: 'PUT',
-        //     url: '/api/cards',
-        //     data: newCard
-        // }).then(function (data) {
-        //     console.log(data)
-        // })
-
-        let currentId = 9
-
-        // $.ajax({
-        //     method: "DELETE",
-        //     url: `/api/boards/${currentId}`
-        //   }).then(function(data) {
-        //       console.log(data)
-        //   })
-
-        //   $.ajax({
-        //     method: "DELETE",
-        //     url: `/api/lists/${currentId}`
-        //   }).then(function(data) {
-        //       console.log(data)
-        //   })
-
-        //   $.ajax({
-        //     method: "DELETE",
-        //     url: `/api/cards/${currentId}`
-        //   }).then(function(data) {
-        //       console.log(data)
-        //   })
     })
 
 })() //IIFE

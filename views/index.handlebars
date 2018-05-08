@@ -39,7 +39,7 @@
     <ul id="dropdown" class="dropdown-content">
         {{#each Boards}}
         <li>
-            <a class="red-text drop-{{id}}" data-id="{{id}}" href="#!">{{name}}</a>
+            <a class="red-text drop-{{id}}" data-id="{{id}}" href="/{{id}}">{{name}}</a>
         </li>
         {{/each}}
     </ul>
@@ -52,7 +52,7 @@
 
         </li>
         <li>
-            <a href="#">About</a>
+            <a href="/about">About</a>
         </li>
         <li>
             <a href="https://github.com/josephemswiler" target="_blank">
@@ -75,7 +75,7 @@
     <ul id="mobile-dropdown" class="dropdown-content">
         {{#each Boards}}
         <li>
-            <a class="red-text change-board drop-{{id}}" data-id="{{id}}" href="#!">{{name}}</a>
+            <a class="red-text change-board drop-{{id}}" data-id="{{id}}" href="/{{id}}">{{name}}</a>
         </li>
         {{/each}}
     </ul>

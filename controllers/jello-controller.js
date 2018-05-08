@@ -49,7 +49,7 @@ module.exports = function (app) {
     app.get('/:id', function (req, res) {
         let index = 0
 
-        if(req.params.id !== undefined)
+        if (req.params.id !== undefined)
             index = parseInt(req.params.id)
 
         db.Boards.findAll({
@@ -135,49 +135,44 @@ module.exports = function (app) {
     app.post('/api/boards', (req, res) => {
         db.Boards.create({
             name: req.body.name,
-        }).then(function (data) {
-            res.json(data)
-        })
+        }).then(data => res.json(data))
     })
 
     app.post('/api/lists', (req, res) => {
         db.Lists.create({
             name: req.body.name,
             board_id: req.body.board_id
-        }).then(function (data) {
-            res.json(data)
-        })
+        }).then(data => res.json(data))
     })
 
     app.post('/api/cards', (req, res) => {
         db.Cards.create({
             text: req.body.text,
             list_id: req.body.list_id
-        }).then(function (data) {
-            res.json(data)
-        })
+        }).then(data => res.json(data))
     })
 
     //Read
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     app.get('/api/boards', (req, res) => {
-        db.Boards.findAll({}).then(function (data) {
-            res.json(data)
-        })
+        db.Boards.findAll({}).then(data => res.json(data))
     })
 
     app.get('/api/lists', (req, res) => {
-        db.Lists.findAll({}).then(function (data) {
-            res.json(data)
-        })
+        db.Lists.findAll({}).then(data => res.json(data))
     })
 
     app.get('/api/cards', (req, res) => {
-        db.Cards.findAll({}).then(function (data) {
-            res.json(data)
-        })
+        db.Cards.findAll({}).then(data => res.json(data))
     })
 
+    app.get('/api/boards/:id', (req, res) => {
+        db.Boards.findAll({
+            where: {
+                id: req.params.id
+            }
+        }).then(data => res.json(data))
+    })
     //Update
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     app.put("/api/boards", (req, res) => {
@@ -188,9 +183,7 @@ module.exports = function (app) {
             where: {
                 id: req.body.id
             }
-        }).then(function (data) {
-            res.json(data)
-        })
+        }).then(data => res.json(data))
     })
 
     app.put("/api/lists", (req, res) => {
@@ -201,44 +194,52 @@ module.exports = function (app) {
             where: {
                 id: req.body.id
             }
-        }).then(function (data) {
-            res.json(data)
-        })
+        }).then(data => res.json(data))
     })
 
     app.put("/api/cards", (req, res) => {
         db.Cards.update({
             text: req.body.text,
+            list_id: req.body.list_id,
             starred: req.body.starred
         }, {
             where: {
                 id: req.body.id
             }
-        }).then(function (data) {
-            res.json(data)
-        })
+        }).then(data => res.json(data))
     })
 
     //Delete
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     app.delete("/api/boards/:id", (req, res) => {
-        db.Boards.destroy({
+        db.List.destroy({
             where: {
-                id: req.params.id
+                board_id: req.params.id
             }
-        }).then(function (data) {
-            res.json(data)
-        })
+        }).then(() => {
+
+            db.Boards.destroy({
+                where: {
+                    id: req.params.id
+                }
+            })
+        }).then(data => res.json(data))
     })
 
     app.delete("/api/lists/:id", (req, res) => {
-        db.Lists.destroy({
+        db.Cards.destroy({
             where: {
-                id: req.params.id
+                list_id: req.params.id
             }
-        }).then(function (data) {
-            res.json(data)
-        })
+        }).then(() => {
+
+            db.Lists.destroy({
+                where: {
+                    id: req.params.id
+                }
+            })
+
+        }).then(data => res.json(data))
     })
 
     app.delete("/api/cards/:id", (req, res) => {
@@ -246,8 +247,6 @@ module.exports = function (app) {
             where: {
                 id: req.params.id
             }
-        }).then(function (data) {
-            res.json(data)
-        })
+        }).then(data => res.json(data))
     })
 }
