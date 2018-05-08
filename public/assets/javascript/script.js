@@ -591,8 +591,6 @@
     })
 
     function updateList(listId, cardId, cardText) {
-        console.log(listId, cardId, cardText)
-
         dbUpdate('cards', {
             id: cardId,
             text: cardText,
