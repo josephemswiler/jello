@@ -55,6 +55,10 @@ body {
     margin-right: 2px;
 }
 
+.inner-card-wrapper {
+    width: 250px;
+}
+
 .card-content {
     padding: 10px !important;
     white-space: normal;

@@ -562,4 +562,34 @@
             url: `/api/${table}/${id}`
         }).then(function (data) {})
     }
+
+    //jQuery UI
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+    $('.inner-card-wrapper').draggable({
+        appendTo: "body",
+        cursor: "move",
+        helper: 'clone',
+        revert: "invalid"
+    })
+
+    $('.card-content').droppable({
+        tolerance: 'intersect',
+        accept: '.inner-card-wrapper',
+        activeClass: 'ui-state-default',
+        hoverClass: 'ui-state-hover',
+        drop: function(event, ui) {        
+            $(this).children('.card-data').append($(ui.draggable))
+        }
+    })
+
+    $('.add-card-btn-wrapper').droppable({
+        tolerance: 'intersect',
+        accept: '.inner-card-wrapper',
+        activeClass: 'ui-state-default',
+        hoverClass: 'ui-state-hover',
+        drop: function(event, ui) {        
+            $(this).siblings('.card-content').children('.card-data').append($(ui.draggable))
+        }
+    })
+
 })() //IIFE
