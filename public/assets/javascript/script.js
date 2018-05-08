@@ -30,8 +30,6 @@
 
         cardOpen = true
 
-        console.log($(this).closest('.open-card'))
-
         $('.card-data').animate({
             scrollTop: $('.card-data').prop('scrollHeight')
         }, 1000)
@@ -67,7 +65,9 @@
             $('.open-card')
                 .text(currentText)
 
-            makeCard()
+            makeCard({
+                id: $('.open-card')[0].dataset.id
+            })
 
             $(this)
                 .siblings('.open-card-btn')
@@ -83,6 +83,8 @@
             return
         }
 
+        dbDelete('cards', $(this).closest('.inner-card-wrapper')[0].dataset.id)
+
         $(this).closest('.inner-card-wrapper').remove()
 
         addingCard = false
@@ -90,7 +92,7 @@
         cardOpen = false
     })
 
-    function makeCard() {
+    function makeCard(data) {
         let close = $('<i>')
             .addClass('fas fa-times close-btn small-close hover-options close-card-wrapper')
         let edit = $('<i>')
@@ -100,9 +102,18 @@
         $('.open-card div br').remove()
 
         $('.open-card')
+        .closest('.inner-card-wrapper')
+        .attr({
+            'id': `card-${data.id}`,
+            'data-id': data.id,
+        })
+
+        $('.open-card')
             .addClass('closed-card')
             .removeClass('open-card')
-            .attr('contenteditable', 'false')
+            .attr(
+                'contenteditable', 'false'
+            )
             .append(edit, close)
 
         addingCard = false
@@ -119,16 +130,27 @@
     })
 
     $(document).on('click', '.open-card-btn', function () {
-        if ($('.open-card').text().trim() === '' && $(this).text() === 'Add')
+        if ($('.open-card').text().trim() === '' && $(this).text() === 'Add') {
+            addingCard = false
+            cardOpen = false
             return
+        }
 
-        if ($('.open-card').text().trim() === '' && $(this).text() === 'Done')
+        if ($('.open-card').text().trim() === '' && $(this).text() === 'Done') {
+            dbDelete('cards', $(this).closest('.inner-card-wrapper')[0].dataset.id)
             $(this).closest('.inner-card-wrapper').remove()
+            addingCard = false
+            cardOpen = false
+            return
+        }
+
+        dbCreateCard('cards', {
+            text: $('.open-card').text().trim(),
+            list_id: $(this).closest('.active-card')[0].dataset.id
+        })
 
         $(this).remove()
         $('.close-open-card').remove()
-
-        makeCard()
     })
 
     //Card - Edit Content
@@ -138,7 +160,10 @@
             if ($('.open-card').text().trim() === '') {
                 $('.open-card').closest('.inner-card-wrapper').remove()
             } else {
-                makeCard()
+                console.log($(this))
+                makeCard({
+                    id: $('.open-card')[0].dataset.id
+                })
                 $('.adding')
                     .remove()
             }
@@ -283,6 +308,16 @@
         addingCard = false
         cardOpen = false
 
+        dbCreateList('lists', {
+            name: $('#new-list').val().trim(),
+            board_id: $(this).closest('.card-wrapper').siblings('.board-wrapper')[0].dataset.id
+        })
+
+
+
+    })
+
+    function makeList(data) {
         let addText = $('<div>')
             .addClass('add-card-btn card-content')
             .text('Add a card...')
@@ -318,6 +353,10 @@
         let outerCard = $('<div>')
             .css('display', 'none')
             .addClass('card outer-card active-card')
+            .attr({
+                'id': `list-${data.id}`,
+                'data-id': data.id
+            })
             .append(content, addCard)
 
         resetAddList()
@@ -329,8 +368,7 @@
             outerCard.insertBefore('.add-list-card')
             outerCard.fadeIn()
         })
-
-    })
+    }
 
     //List - Edit Name
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
@@ -426,8 +464,16 @@
 
     //db CRUD Functions
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
-    function dbCreate(table, object) {
-        $.post(`/api/${table}`, object, function (data) {})
+    function dbCreateCard(table, object) {
+        $.post(`/api/${table}`, object, function (data) {
+            return data
+        }).then(data => makeCard(data))
+    }
+
+    function dbCreateList(table, object) {
+        $.post(`/api/${table}`, object, function (data) {
+            return data
+        }).then(data => makeList(data))
     }
 
     function dbRead(table) {
@@ -447,16 +493,17 @@
             method: 'DELETE',
             url: `/api/${table}/${id}`
         }).then(function (data) {
-            console.log(data)
         })
     }
 
     $(document).ready(function () {
 
+
+
         $(document).on('click', '.change-board', function () {
 
             $.get(`/${$(this)[0].dataset.id}`, function (data) {
-                  console.log(data)
+                console.log(data)
             })
         })
 

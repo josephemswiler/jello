@@ -80,7 +80,7 @@
         {{/each}}
     </ul>
     <!-- /#mobile-dropdown -->
-    <div class="board-wrapper">
+    <div class="board-wrapper" data-id="{{currentBoard.id}}">
         <div class="card board-title outer-card">
 
             <div id="board-{{currentBoard.id}}" class="card-content grey-text text-lighten-2">{{currentBoard.name}}</div>
@@ -110,7 +110,7 @@
     </div>
     <div class="card-wrapper">
         {{#each currentBoard.Lists}}
-        <div id="list-{{id}}" class="card outer-card active-card">
+        <div id="list-{{id}}" data-id="{{id}}" class="card outer-card active-card">
             <div class="card-content grey lighten-3">
                 <div class="card-name">
                     <strong class="list-name">{{name}}</strong>
@@ -120,7 +120,7 @@
                 </div>
                 <div class="card-data">
                     {{#each Cards}}
-                    <div id="card-{{id}}" class="inner-card-wrapper">
+                    <div id="card-{{id}}" data-id="{{id}}" class="inner-card-wrapper">
                         <div class="card inner-card">
                             <div class="card-content">
                                 <p class="closed-card" contenteditable="false">{{text}}
