@@ -2,6 +2,7 @@
 
     let addingCard = false
     let currentText = ''
+    let cardOpen = false
 
     //Dynamically set max-height of list based on window size
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
@@ -18,14 +19,22 @@
     //Card - Add
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.add-card-btn', function () {
-        if (addingCard)
+
+        if (addingCard) //here also, //here link crud ops, jQuery UI, deploy heroku, boards
             return
+
+        addingCard = true
+
+        if (cardOpen)
+            return
+
+        cardOpen = true
+
+        console.log($(this).closest('.open-card'))
 
         $('.card-data').animate({
             scrollTop: $('.card-data').prop('scrollHeight')
         }, 1000)
-
-        addingCard = true
 
         let p = $('<p>')
             .addClass('open-card')
@@ -93,6 +102,8 @@
             .append(edit, close)
 
         addingCard = false
+
+        cardOpen = false
     }
 
     $(document).on('click', '.board-fav-star', function () {
@@ -190,8 +201,6 @@
             $(this)
                 .hide()
         })
-
-        addingCard = true
 
         let label = $('<label>')
             .attr('for', 'new-list')
@@ -405,12 +414,25 @@
 
     function getBoards() {
         $.get("/api", function (data) {
-            console.log(data)
+            // console.log(data)
 
         })
     }
 
     getBoards()
+
+    $(document).on('click', '.change-board', function () {
+
+        $.get(`/${$(this)[0].dataset.id}`, function (data) {
+            // $(document).html(data)
+            //   console.log(data)
+            //     let newData = data.split('<div class="wrapper">')
+            //     let middleData = newData[1].split('<!-- jQuery (uncompressed) -->')
+            //     let result = middleData[0]
+            //     console.log(result.toString())
+            // $('.wrapper').children().remove().html(result.toString())
+        })
+    })
 
     $(document).ready(function () {
 
@@ -425,7 +447,7 @@
         }
 
         let card = {
-            text: 'Text of card one.',
+            text: 'Text of card one.', 
             list_id: 5
         }
 

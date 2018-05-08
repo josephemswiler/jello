@@ -3,6 +3,11 @@ const db = require("../models");
 module.exports = function (app) {
 
     app.get('/', function (req, res) {
+        let index = 0
+
+        // if(req.params.id)
+        //     index = parseInt(req.params.id)
+
         db.Boards.findAll({
             include: [{
                 model: db.Lists,
@@ -36,49 +41,54 @@ module.exports = function (app) {
             })
             res.render('index', {
                 Boards: boardData,
-                Lists: boardData[0].Lists
+                currentBoard: boardData[index]
             })
         })
     })
 
-    // app.get('/api/all/:id', function (req, res) {
-    //     db.Boards.findAll({
-    //         include: [{
-    //             model: db.Lists,
-    //             include: [{
-    //                 model: db.Cards
-    //             }]
-    //         }]
-    //     }).then(Boards => {
-    //         const boardData = Boards.map(Boards => {
-    //             return Object.assign({}, {
-    //                 id: Boards.id,
-    //                 name: Boards.name,
-    //                 starred: Boards.starred,
-    //                 Lists: Boards.Lists.map(Lists => {
-    //                     return Object.assign({}, {
-    //                         id: Lists.id,
-    //                         name: Lists.name,
-    //                         board: Lists.board_id,
-    //                         starred: Lists.starred,
-    //                         Cards: Lists.Cards.map(Cards => {
-    //                             return Object.assign({}, {
-    //                                 id: Cards.id,
-    //                                 text: Cards.text,
-    //                                 list: Cards.list_id,
-    //                                 starred: Cards.starred
-    //                             })
-    //                         })
-    //                     })
-    //                 })
-    //             })
-    //         })
-    //         res.render('index', {
-    //             Boards: boardData,
-    //             Lists: boardData[parseInt(req.params.id)].Lists
-    //         })
-    //     })
-    // })
+    app.get('/:id', function (req, res) {
+        let index = 0
+
+        if(req.params.id !== undefined)
+            index = parseInt(req.params.id)
+
+        db.Boards.findAll({
+            include: [{
+                model: db.Lists,
+                include: [{
+                    model: db.Cards
+                }]
+            }]
+        }).then(Boards => {
+            const boardData = Boards.map(Boards => {
+                return Object.assign({}, {
+                    id: Boards.id,
+                    name: Boards.name,
+                    starred: Boards.starred,
+                    Lists: Boards.Lists.map(Lists => {
+                        return Object.assign({}, {
+                            id: Lists.id,
+                            name: Lists.name,
+                            board: Lists.board_id,
+                            starred: Lists.starred,
+                            Cards: Lists.Cards.map(Cards => {
+                                return Object.assign({}, {
+                                    id: Cards.id,
+                                    text: Cards.text,
+                                    list: Cards.list_id,
+                                    starred: Cards.starred
+                                })
+                            })
+                        })
+                    })
+                })
+            })
+            res.render('index', {
+                Boards: boardData,
+                currentBoard: boardData[index]
+            })
+        })
+    })
 
     app.get('/about', (req, res) => {
         res.render('index')
@@ -116,7 +126,6 @@ module.exports = function (app) {
                     })
                 })
             })
-            //   res.render('index', boardData)
             res.json(boardData)
         })
     })

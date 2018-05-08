@@ -39,7 +39,7 @@
     <ul id="dropdown" class="dropdown-content">
         {{#each Boards}}
         <li>
-            <a class="red-text drop-{{id}}" href="#!">{{name}}</a>
+            <a class="red-text drop-{{id}}" data-id="{{id}}" href="#!">{{name}}</a>
         </li>
         {{/each}}
     </ul>
@@ -75,14 +75,15 @@
     <ul id="mobile-dropdown" class="dropdown-content">
         {{#each Boards}}
         <li>
-            <a class="red-text drop-{{id}}" href="#!">{{name}}</a>
+            <a class="red-text change-board drop-{{id}}" data-id="{{id}}" href="#!">{{name}}</a>
         </li>
         {{/each}}
     </ul>
     <!-- /#mobile-dropdown -->
     <div class="board-wrapper">
         <div class="card board-title outer-card">
-            <div id="board-1" class="card-content grey-text text-lighten-2">Board Name</div>
+
+            <div id="board-{{currentBoard.id}}" class="card-content grey-text text-lighten-2">{{currentBoard.name}}</div>
         </div>
         <div class="card board-star outer-card">
             <a class="card-content board-fav-star grey-text text-lighten-2 material-icons">star_border</a>
@@ -108,7 +109,7 @@
         </div>
     </div>
     <div class="card-wrapper">
-        {{#each Lists}}
+        {{#each currentBoard.Lists}}
         <div id="list-{{id}}" class="card outer-card active-card">
             <div class="card-content grey lighten-3">
                 <div class="card-name">
