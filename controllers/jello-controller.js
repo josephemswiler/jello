@@ -212,7 +212,7 @@ module.exports = function (app) {
     //Delete
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     app.delete("/api/boards/:id", (req, res) => {
-        db.List.destroy({
+        db.Lists.destroy({
             where: {
                 board_id: req.params.id
             }
