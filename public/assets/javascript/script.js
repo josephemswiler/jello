@@ -3,6 +3,7 @@
     let addingCard = false
     let currentText = ''
     let cardOpen = false
+    let updatingListId = null
 
     //Dynamically set max-height of list based on window size
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
@@ -68,11 +69,11 @@
         $('.open-card div br').remove()
 
         $('.open-card')
-        .closest('.inner-card-wrapper')
-        .attr({
-            'id': `card-${data.id}`,
-            'data-id': data.id,
-        })
+            .closest('.inner-card-wrapper')
+            .attr({
+                'id': `card-${data.id}`,
+                'data-id': data.id,
+            })
 
         $('.open-card')
             .addClass('closed-card')
@@ -380,8 +381,12 @@
     }
 
     //List - Update
-    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//  
     $(document).on('click', '.list-name', function () {
+
+        updatingListId = $(this).closest('.outer-card')[0].dataset.id
+        currentText = $(this).text()
+
         $(this)
             .attr('contenteditable', 'true')
             .focus()
@@ -396,16 +401,29 @@
 
             container
                 .attr('contenteditable', 'false')
+                
+            if ($(`.card-wrapper [data-id="${updatingListId}"] strong`).text().trim() === '') {
+                $(`.card-wrapper [data-id="${updatingListId}"] strong`).text(currentText)
+            }
+
+            dbUpdate('lists', {
+                id: updatingListId,
+                name: $(`.card-wrapper [data-id="${updatingListId}"] strong`).text().trim(),
+                starred: 0
+            })
+
+            currentText = ''
+            updatingListId = null
         }
     })
 
     //List - Delete
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
-    $(document).on('click', '.remove-list-btn', function() {
+    $(document).on('click', '.remove-list-btn', function () {
 
         dbDelete('lists', $(this).closest('.outer-card')[0].dataset.id)
 
-        $(this).closest('.outer-card').fadeOut(function() {
+        $(this).closest('.outer-card').fadeOut(function () {
             $(this).closest('.outer-card').remove()
         })
 
@@ -513,8 +531,7 @@
         $.ajax({
             method: 'DELETE',
             url: `/api/${table}/${id}`
-        }).then(function (data) {
-        })
+        }).then(function (data) {})
     }
 
     $(document).ready(function () {
