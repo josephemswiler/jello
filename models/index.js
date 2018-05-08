@@ -14,12 +14,6 @@ if (config.use_env_variable) {
   var sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-// if (process.env.JAWSDB_URL) {
-//   var sequelize = new Sequelize(process.env.JAWSDB_URL, config)
-// } else {
-//   var sequelize = new Sequelize(config.database, config.username, config.password, config)
-// }
-
 fs
   .readdirSync(__dirname)
   .filter(file => {

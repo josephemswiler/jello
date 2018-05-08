@@ -17,6 +17,55 @@
         setHeight()
     })
 
+    //jQuery UI
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+    function initDrag() {
+
+        $('.drag-wrapper').draggable({
+            appendTo: 'body',
+            cursor: 'move',
+            helper: 'clone',
+            revert: 'invalid'
+        })
+
+        $('.card-content').droppable({
+            tolerance: 'intersect',
+            accept: '.drag-wrapper',
+            activeClass: 'ui-state-default',
+            hoverClass: 'ui-state-hover',
+            drop: function (event, ui) {
+                $(this).children('.card-data').append($(ui.draggable))
+                updateList($(this).closest('.outer-card')[0].dataset.id, $(ui.draggable)[0].dataset.id, $(ui.draggable).text().trim())
+            }
+        })
+
+        $('.add-card-btn-wrapper').droppable({
+            tolerance: 'intersect',
+            accept: '.drag-wrapper',
+            activeClass: 'ui-state-default',
+            hoverClass: 'ui-state-hover',
+            drop: function (event, ui) {
+                $(this).siblings('.card-content').children('.card-data').append($(ui.draggable))
+                updateList($(this).closest('.outer-card')[0].dataset.id, $(ui.draggable)[0].dataset.id, $(ui.draggable).text().trim())
+            }
+        })
+    }
+
+    initDrag()
+
+    $(document).ajaxComplete(function () {
+        initDrag()
+    })
+
+    function updateList(listId, cardId, cardText) {
+        dbUpdate('cards', {
+            id: cardId,
+            text: cardText,
+            list_id: listId,
+            starred: 0
+        })
+    }
+
     //Card - Create
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.add-card-btn', function () {
@@ -55,8 +104,13 @@
             .append(div)
             .append(button, close)
 
-        $(this).closest('.outer-card').find('.card-data').append(wrapper)
-        $('.open-card').focus().select()
+        $(this).closest('.outer-card')
+            .find('.card-data')
+            .append(wrapper)
+
+        $('.open-card')
+            .focus()
+            .select()
     })
 
     function makeCard(data) {
@@ -126,22 +180,30 @@
                 list_id: $(this).closest('.active-card')[0].dataset.id,
                 starred: 0
             })
+            makeCard({ id: $(this).closest('.inner-card-wrapper')[0].dataset.id })
         }
 
-        $(this).remove()
-        $('.close-open-card').remove()
+        $(this)
+            .closest('.inner-card-wrapper')
+            .addClass('drag-wrapper ui-draggable ui-draggable-handle')
+        $(this)
+            .remove()
+        $('.close-open-card')
+            .remove()
     })
 
     //Card - Update
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.fa-edit', function () {
+
+        currentText = $(this).parent().text().trim()
+
         if (addingCard) {
             if ($('.open-card').text().trim() === '') {
                 $('.open-card').closest('.inner-card-wrapper').remove()
             } else {
-                console.log($(this))
                 makeCard({
-                    id: $('.open-card')[0].dataset.id
+                    id: $('.open-card').closest('.inner-card-wrapper')[0].dataset.id
                 })
                 $('.adding')
                     .remove()
@@ -151,8 +213,6 @@
         addingCard = true
 
         cardOpen = true
-
-        currentText = $(this).parent().text()
 
         let button = $('<button>')
             .addClass('open-card-btn waves-effect waves-light btn green darken-1 white-text')
@@ -177,6 +237,7 @@
 
         $(this)
             .closest('.inner-card-wrapper')
+            .draggable('disable')
             .append(button, close)
     })
 
@@ -185,9 +246,6 @@
     $(document).on('click', '.close-card-wrapper', function () {
 
         if ($('.open-card').text().trim() !== '' && $(this).siblings('.open-card-btn').text() === 'Done') {
-
-            $('.open-card')
-                .text(currentText)
 
             makeCard({
                 id: $('.open-card')[0].dataset.id
@@ -282,7 +340,7 @@
     })
 
     $(document).mouseup(function (event) {
-        var container = $('.add-list-card')
+        let container = $('.add-list-card')
 
         if (!container.is(event.target) && container.has(event.target).length === 0) {
             resetAddList()
@@ -317,7 +375,7 @@
             resetAddList()
             cardOpen = false
             return
-        } 
+        }
 
         addingCard = false
         cardOpen = false
@@ -395,7 +453,7 @@
     })
 
     $(document).mouseup(function (event) {
-        var container = $('.list-name')
+        let container = $('.list-name')
 
         if (!container.is(event.target) && container.has(event.target).length === 0) {
             $('.list-name br').remove()
@@ -439,7 +497,7 @@
             .val($(this).children('.card-content').text())
             .focus()
             .select()
-        
+
         currentText = $('#board-rename-input').val()
         updatingBoardId = $('.board-wrapper')[0].dataset.id
     })
@@ -450,7 +508,7 @@
     })
 
     $(document).mouseup(function (event) {
-        var container = $('.rename-board')
+        let container = $('.rename-board')
 
         if (!container.is(event.target) && container.has(event.target).length === 0) {
             container.hide()
@@ -460,20 +518,20 @@
     $(document).on('click', '.rename-board-btn', function (event) {
         event.preventDefault()
 
-            if ($('#board-rename-input').val().trim() === '') {
-                $('.board-title').children('.card-content').text(currentText)
-            } else {
-                $('.board-title').children('.card-content').text($('#board-rename-input').val().trim())
-            }
+        if ($('#board-rename-input').val().trim() === '') {
+            $('.board-title').children('.card-content').text(currentText)
+        } else {
+            $('.board-title').children('.card-content').text($('#board-rename-input').val().trim())
+        }
 
-            dbUpdate('boards', {
-                id: updatingBoardId,
-                name: $('.board-title').children('.card-content').text(),
-                starred: 0
-            })
+        dbUpdate('boards', {
+            id: updatingBoardId,
+            name: $('.board-title').children('.card-content').text(),
+            starred: 0
+        })
 
-            currentText = ''
-            updatingBoardId = null
+        currentText = ''
+        updatingBoardId = null
 
         $('.rename-board').hide()
     })
@@ -551,53 +609,6 @@
         }).then(function (data) {})
     }
 
-    //jQuery UI
-    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
-    function initDrag() {
-        $('.inner-card-wrapper').draggable({
-            appendTo: 'body',
-            cursor: 'move',
-            helper: 'clone',
-            revert: 'invalid'
-        })
 
-        $('.card-content').droppable({
-            tolerance: 'intersect',
-            accept: '.inner-card-wrapper',
-            activeClass: 'ui-state-default',
-            hoverClass: 'ui-state-hover',
-            drop: function(event, ui) {        
-                $(this).children('.card-data').append($(ui.draggable))
-                updateList($(this).closest('.outer-card')[0].dataset.id, $(ui.draggable)[0].dataset.id, $(ui.draggable).text().trim())
-            }
-        })
-    
-        $('.add-card-btn-wrapper').droppable({
-            tolerance: 'intersect',
-            accept: '.inner-card-wrapper',
-            activeClass: 'ui-state-default',
-            hoverClass: 'ui-state-hover',
-            drop: function(event, ui) {        
-                $(this).siblings('.card-content').children('.card-data').append($(ui.draggable))
-                updateList($(this).closest('.outer-card')[0].dataset.id, $(ui.draggable)[0].dataset.id, $(ui.draggable).text().trim())
-            }
-        })
-    }
-   
-    initDrag()
-
-    $(document).ajaxComplete(function() {
-        initDrag()
-    })
-
-    function updateList(listId, cardId, cardText) {
-        dbUpdate('cards', {
-            id: cardId,
-            text: cardText,
-            list_id: listId,
-            starred: 0
-        })
-
-    }
 
 })() //IIFE
