@@ -4,106 +4,122 @@ module.exports = function (app) {
 
     app.get('/', function (req, res) {
         db.Boards.findAll({
-            include: [
-              {
+            include: [{
                 model: db.Lists,
-                include: [
-                  {
+                include: [{
                     model: db.Cards
-                  }
-                ]
-              }
-            ]
-          }).then(Boards => {
+                }]
+            }]
+        }).then(Boards => {
             const boardData = Boards.map(Boards => {
-              return Object.assign(
-                {},
-                {
-                  id: Boards.id,
-                  name: Boards.name,
-                  starred: Boards.starred,
-                  Lists: Boards.Lists.map(Lists => {
-                    return Object.assign(
-                      {},
-                      {
-                        id: Lists.id,
-                        name: Lists.name,
-                        board: Lists.board_id,
-                        starred: Lists.starred,
-                        Cards: Lists.Cards.map(Cards => {
-                          return Object.assign(
-                            {},
-                            {
-                              id: Cards.id,
-                              text: Cards.text,
-                              list: Cards.list_id,
-                              starred: Cards.starred
-                            }
-                          )
+                return Object.assign({}, {
+                    id: Boards.id,
+                    name: Boards.name,
+                    starred: Boards.starred,
+                    Lists: Boards.Lists.map(Lists => {
+                        return Object.assign({}, {
+                            id: Lists.id,
+                            name: Lists.name,
+                            board: Lists.board_id,
+                            starred: Lists.starred,
+                            Cards: Lists.Cards.map(Cards => {
+                                return Object.assign({}, {
+                                    id: Cards.id,
+                                    text: Cards.text,
+                                    list: Cards.list_id,
+                                    starred: Cards.starred
+                                })
+                            })
                         })
-                      }
-                      )
-                  })
-                }
-              )
+                    })
+                })
             })
-            res.render('index', { Boards: boardData, Lists: boardData[0].Lists, Cards: boardData[0].Lists[0].Cards })
-          })
+            res.render('index', {
+                Boards: boardData,
+                Lists: boardData[0].Lists
+            })
+        })
     })
+
+    // app.get('/api/all/:id', function (req, res) {
+    //     db.Boards.findAll({
+    //         include: [{
+    //             model: db.Lists,
+    //             include: [{
+    //                 model: db.Cards
+    //             }]
+    //         }]
+    //     }).then(Boards => {
+    //         const boardData = Boards.map(Boards => {
+    //             return Object.assign({}, {
+    //                 id: Boards.id,
+    //                 name: Boards.name,
+    //                 starred: Boards.starred,
+    //                 Lists: Boards.Lists.map(Lists => {
+    //                     return Object.assign({}, {
+    //                         id: Lists.id,
+    //                         name: Lists.name,
+    //                         board: Lists.board_id,
+    //                         starred: Lists.starred,
+    //                         Cards: Lists.Cards.map(Cards => {
+    //                             return Object.assign({}, {
+    //                                 id: Cards.id,
+    //                                 text: Cards.text,
+    //                                 list: Cards.list_id,
+    //                                 starred: Cards.starred
+    //                             })
+    //                         })
+    //                     })
+    //                 })
+    //             })
+    //         })
+    //         res.render('index', {
+    //             Boards: boardData,
+    //             Lists: boardData[parseInt(req.params.id)].Lists
+    //         })
+    //     })
+    // })
 
     app.get('/about', (req, res) => {
         res.render('index')
     })
 
-    app.get('/api', (req, res) => {  
+    app.get('/api', (req, res) => {
         db.Boards.findAll({
-          include: [
-            {
-              model: db.Lists,
-              include: [
-                {
-                  model: db.Cards
-                }
-              ]
-            }
-          ]
+            include: [{
+                model: db.Lists,
+                include: [{
+                    model: db.Cards
+                }]
+            }]
         }).then(Boards => {
-          const boardData = Boards.map(Boards => {
-            return Object.assign(
-              {},
-              {
-                id: Boards.id,
-                name: Boards.name,
-                starred: Boards.starred,
-                Lists: Boards.Lists.map(Lists => {
-                  return Object.assign(
-                    {},
-                    {
-                      id: Lists.id,
-                      name: Lists.name,
-                      board: Lists.board_id,
-                      starred: Lists.starred,
-                      Cards: Lists.Cards.map(Cards => {
-                        return Object.assign(
-                          {},
-                          {
-                            id: Cards.id,
-                            text: Cards.text,
-                            list: Cards.list_id,
-                            starred: Cards.starred
-                          }
-                        )
-                      })
-                    }
-                    )
+            const boardData = Boards.map(Boards => {
+                return Object.assign({}, {
+                    id: Boards.id,
+                    name: Boards.name,
+                    starred: Boards.starred,
+                    Lists: Boards.Lists.map(Lists => {
+                        return Object.assign({}, {
+                            id: Lists.id,
+                            name: Lists.name,
+                            board: Lists.board_id,
+                            starred: Lists.starred,
+                            Cards: Lists.Cards.map(Cards => {
+                                return Object.assign({}, {
+                                    id: Cards.id,
+                                    text: Cards.text,
+                                    list: Cards.list_id,
+                                    starred: Cards.starred
+                                })
+                            })
+                        })
+                    })
                 })
-              }
-            )
-          })
-        //   res.render('index', boardData)
-        res.json(boardData)
+            })
+            //   res.render('index', boardData)
+            res.json(boardData)
         })
-      })
+    })
 
     //Create
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//

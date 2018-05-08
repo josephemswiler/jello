@@ -13,7 +13,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">About</a>
+                        <a href="/about">About</a>
                     </li>
                     <li>
                         <a href="https://github.com/josephemswiler" target="_blank">
@@ -109,7 +109,7 @@
     </div>
     <div class="card-wrapper">
         {{#each Lists}}
-        <div class="card outer-card active-card">
+        <div id="list-{{id}}" class="card outer-card active-card">
             <div class="card-content grey lighten-3">
                 <div class="card-name">
                     <strong class="list-name">{{name}}</strong>
@@ -119,9 +119,14 @@
                 </div>
                 <div class="card-data">
                     {{#each Cards}}
-                    <div id="card-{{id}}" class="card inner-card">
-                        <div class="card-content">
-                            <p>{{text}}</p>
+                    <div id="card-{{id}}" class="inner-card-wrapper">
+                        <div class="card inner-card">
+                            <div class="card-content">
+                                <p class="closed-card" contenteditable="false">{{text}}
+                                    <i class="fas fa-times close-btn small-close hover-options close-card-wrapper"></i>
+                                    <i class="fas fa-edit hover-options"></i>
+                                </p>
+                            </div>
                         </div>
                     </div>
                     {{/each}}

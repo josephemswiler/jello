@@ -403,12 +403,10 @@
             .removeClass('lighten-2')
     })
 
-
-
     function getBoards() {
         $.get("/api", function (data) {
             console.log(data)
-            // res.render(data)
+
         })
     }
 
@@ -428,7 +426,7 @@
 
         let card = {
             text: 'Text of card one.',
-            list_id: 1
+            list_id: 5
         }
 
         // ${board.id}/${board.name}
@@ -488,7 +486,7 @@
         //     console.log(data)
         // })
 
-        let currentId = 1
+        let currentId = 9
 
         // $.ajax({
         //     method: "DELETE",
