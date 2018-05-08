@@ -8,17 +8,17 @@ var env       = process.env.NODE_ENV || 'development';
 var config    = require(__dirname + '/../config/config.json')[env];
 var db        = {};
 
-// if (config.use_env_variable) {
-//   var sequelize = new Sequelize(process.env[config.use_env_variable], config);
-// } else {
-//   var sequelize = new Sequelize(config.database, config.username, config.password, config);
-// }
-
-if (process.env.JAWSDB_URL) {
-  var sequelize = new Sequelize(process.env.JAWSDB_URL, config)
+if (config.use_env_variable) {
+  var sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
-  var sequelize = new Sequelize(config.database, config.username, config.password, config)
+  var sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
+
+// if (process.env.JAWSDB_URL) {
+//   var sequelize = new Sequelize(process.env.JAWSDB_URL, config)
+// } else {
+//   var sequelize = new Sequelize(config.database, config.username, config.password, config)
+// }
 
 fs
   .readdirSync(__dirname)
@@ -27,21 +27,21 @@ fs
   })
   .forEach(file => {
     var model = sequelize['import'](path.join(__dirname, file));
-    db[model.name] = model;
+    db[model.name] = model
   });
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
-});
+})
 
 db.Cards.belongsTo(db.Lists, {foreignKey: 'list_id'})
 db.Lists.hasMany(db.Cards, {foreignKey: 'list_id'})
 db.Lists.belongsTo(db.Boards, {foreignKey: 'board_id'})
 db.Boards.hasMany(db.Lists, {foreignKey: 'board_id'})
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+db.sequelize = sequelize
+db.Sequelize = Sequelize
 
-module.exports = db;
+module.exports = db
