@@ -74,7 +74,8 @@ body {
     width: auto;
 }
 
-.close-rename {
+.close-rename,
+.close-remove-list {
     position: absolute;
     top: 8px;
     right: 8px;
@@ -94,7 +95,7 @@ body {
     left: 8px;
 }
 
-.rename-card {
+.remove-list {
     width: 300px !important;
 }
 

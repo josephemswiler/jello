@@ -71,7 +71,7 @@
             </a>
         </li>
     </ul>
-    <!-- /.sidenav -->
+    <!-- /#mobile-sidenav -->
     <ul id="mobile-dropdown" class="dropdown-content">
         {{#each Boards}}
         <li>
@@ -114,7 +114,7 @@
             <div class="card-content grey lighten-3">
                 <div class="card-name">
                     <strong class="list-name">{{name}}</strong>
-                    <a class="grey grey-text ellipsis-btn right center-align lighten-3 dropdown-trigger" href="#!" data-target="rename-card-dropdown">
+                    <a class="grey grey-text ellipsis-btn right center-align lighten-3 dropdown-trigger" href="#!" data-target="remove-list-{{id}}">
                         ...
                     </a>
                 </div>
@@ -137,25 +137,25 @@
                 <div class="add-card-btn card-content">Add a card...</div>
             </div>
         </div>
+        <div id="remove-list-{{id}}" data-id={{id}} class="dropdown-content remove-list card">
+            <div class="card-content grey-text center-align">List Actions
+                <div class="right-align close-remove-list">
+                    <i class="material-icons">close</i>
+                </div>
+                <hr>
+                <ul>
+                    <li>
+                        <a class="red-text remove-list-btn" href="#">Remove List...</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
         {{/each}}
-        <!-- /.card -->
+        <!-- /each Lists -->
         <div class="card add-list-card outer-card">
             <div class="add-list-btn card-content grey-text text-lighten-2">Add a list...</div>
         </div>
         <!-- /.add-list-card -->
     </div>
     <!-- /.container -->
-    <div id="rename-card-dropdown" class="dropdown-content rename-card card">
-        <div class="card-content grey-text center-align">List Actions
-            <div class="right-align close-rename">
-                <i class="material-icons">close</i>
-            </div>
-            <hr>
-            <ul>
-                <li>
-                    <a class="red-text add-card-btn" href="#">Add Card...</a>
-                </li>
-            </ul>
-        </div>
-    </div>
 </div>

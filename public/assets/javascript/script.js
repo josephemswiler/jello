@@ -16,7 +16,7 @@
         setHeight()
     })
 
-    //Card - Add
+    //Card - Create
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.add-card-btn', function () {
 
@@ -56,40 +56,6 @@
 
         $(this).closest('.outer-card').find('.card-data').append(wrapper)
         $('.open-card').focus().select()
-    })
-
-    $(document).on('click', '.close-card-wrapper', function () {
-
-        if ($('.open-card').text().trim() !== '' && $(this).siblings('.open-card-btn').text() === 'Done') {
-
-            $('.open-card')
-                .text(currentText)
-
-            makeCard({
-                id: $('.open-card')[0].dataset.id
-            })
-
-            $(this)
-                .siblings('.open-card-btn')
-                .remove()
-
-            $(this)
-                .remove()
-
-            addingCard = false
-
-            cardOpen = false
-
-            return
-        }
-
-        dbDelete('cards', $(this).closest('.inner-card-wrapper')[0].dataset.id)
-
-        $(this).closest('.inner-card-wrapper').remove()
-
-        addingCard = false
-
-        cardOpen = false
     })
 
     function makeCard(data) {
@@ -164,7 +130,7 @@
         $('.close-open-card').remove()
     })
 
-    //Card - Edit Content
+    //Card - Update
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.fa-edit', function () {
         if (addingCard) {
@@ -212,7 +178,43 @@
             .append(button, close)
     })
 
-    //List - Add
+    //Card - Delete
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+    $(document).on('click', '.close-card-wrapper', function () {
+
+        if ($('.open-card').text().trim() !== '' && $(this).siblings('.open-card-btn').text() === 'Done') {
+
+            $('.open-card')
+                .text(currentText)
+
+            makeCard({
+                id: $('.open-card')[0].dataset.id
+            })
+
+            $(this)
+                .siblings('.open-card-btn')
+                .remove()
+
+            $(this)
+                .remove()
+
+            addingCard = false
+
+            cardOpen = false
+
+            return
+        }
+
+        dbDelete('cards', $(this).closest('.inner-card-wrapper')[0].dataset.id)
+
+        $(this).closest('.inner-card-wrapper').remove()
+
+        addingCard = false
+
+        cardOpen = false
+    })
+
+    //List - Create
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.add-list-btn', function () {
 
@@ -300,7 +302,6 @@
                 opacity: 1
             }, 500)
         })
-
     }
 
     $(document).on('click', '.close-save-list', function () {
@@ -323,9 +324,6 @@
             name: $('#new-list').val().trim(),
             board_id: $(this).closest('.card-wrapper').siblings('.board-wrapper')[0].dataset.id
         })
-
-
-
     })
 
     function makeList(data) {
@@ -344,7 +342,7 @@
             .addClass('grey grey-text ellipsis-btn right center-align lighten-3 dropdown-trigger')
             .attr({
                 'href': '#!',
-                'data-target': 'rename-card-dropdown'
+                'data-target': 'remove-list-dropdown'
             })
             .text('...')
 
@@ -381,7 +379,7 @@
         })
     }
 
-    //List - Edit Name
+    //List - Update
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.list-name', function () {
         $(this)
@@ -399,6 +397,18 @@
             container
                 .attr('contenteditable', 'false')
         }
+    })
+
+    //List - Delete
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+    $(document).on('click', '.remove-list-btn', function() {
+
+        dbDelete('lists', $(this).closest('.outer-card')[0].dataset.id)
+
+        $(this).closest('.outer-card').fadeOut(function() {
+            $(this).closest('.outer-card').remove()
+        })
+
     })
 
     //Board - Edit Name
