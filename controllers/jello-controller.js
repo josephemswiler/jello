@@ -47,8 +47,12 @@ module.exports = function (app) {
                 }
               )
             })
-            res.render('index', { data: boardData })
+            res.render('index', { Boards: boardData, Lists: boardData[0].Lists, Cards: boardData[0].Lists[0].Cards })
           })
+    })
+
+    app.get('/about', (req, res) => {
+        res.render('index')
     })
 
     app.get('/api', (req, res) => {  
