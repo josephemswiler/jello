@@ -172,6 +172,7 @@ module.exports = function (app) {
             }
         }).then(data => res.json(data))
     })
+
     //Update
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     app.put("/api/boards", (req, res) => {
@@ -230,7 +231,6 @@ module.exports = function (app) {
                     id: req.params.id
                 }
             })
-
         }).then(data => res.json(data))
     })
 
