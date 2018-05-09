@@ -20,6 +20,11 @@ body {
     max-height: 100%;
 }
 
+.board-wrapper,
+.card-wrapper {
+    display: none;
+}
+
 .wrapper {
     height: 100%;
     width: 100%;

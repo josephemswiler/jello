@@ -624,6 +624,11 @@
             .removeClass('lighten-2')
     })
 
+    $(document).ready(function() {
+        $('.board-wrapper').fadeIn('slow')
+        $('.card-wrapper').fadeIn('slow')
+    })
+
     //db CRUD Functions
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     function dbCreateCard(table, object) {
@@ -664,4 +669,4 @@
     }
 })() //IIFE
 
-//add list remove btn
+//add list remove btng
