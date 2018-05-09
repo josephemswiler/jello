@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Pacifico|Vibur');
+@import url('https://fonts.googleapis.com/css?family=Pacifico|Comfortaa');
 html,
 body {
     height: 100%;
@@ -18,10 +18,12 @@ body {
     overflow-x: scroll;
     overflow-y: hidden;
     max-height: 100%;
+    font-family: 'Comfortaa', sans-serif;
 }
 
 .board-wrapper,
-.card-wrapper {
+.card-wrapper,
+.landing-wrapper {
     display: none;
 }
 
@@ -108,14 +110,14 @@ body {
     width: 300px !important;
 }
 
-.input-field input[type=text]:focus + label {
+.input-field input[type=text]:focus+label {
     color: #43a047 !important;
-  }
+}
 
-  .input-field input[type=text]:focus {
+.input-field input[type=text]:focus {
     border-bottom: 1px solid #43a047 !important;
     box-shadow: 0 1px 0 0 #43a047 !important;
-  }
+}
 
 .add-list-card {
     background: rgba(0, 0, 0, .2);
@@ -136,7 +138,6 @@ body {
     border: none;
     overflow: auto;
     outline: none;
-
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
@@ -147,24 +148,24 @@ body {
 }
 
 .closed-card {
-    position:relative;
+    position: relative;
 }
 
 .closed-card:after {
-    content:'\A';
-    position:absolute;
-    width:100%; 
-    height:100%;
-    top:0; 
-    left:0;
-    background:rgba(255,255,255,0.5);
-    opacity:0;
+    content: '\A';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
     transition: all 0.5s;
-    
     -webkit-transition: all 0.5s;
 }
+
 .closed-card:hover:after {
-    opacity:1;
+    opacity: 1;
 }
 
 .close-card-wrapper {
@@ -199,16 +200,23 @@ body {
 }
 
 .ellipsis-btn {
-border-radius: 4px;
-padding: 0px 5px 0px 5px;
-height: 20px;
-line-height: 11px;
-text-align: center;
-vertical-align: middle;
+    border-radius: 4px;
+    padding: 0px 5px 0px 5px;
+    height: 20px;
+    line-height: 11px;
+    text-align: center;
+    vertical-align: middle;
 }
 
-.ellipsis-btn i {
+.landing-container {
+    margin-top: 15px;
+}
 
+.instructions {
+    background: rgba(0, 0, 0, 0);
+    background-image: linear-gradient(to right bottom, #546e7a80, #5372a980, #a35eb580, #f1287e80, #ff3d0080);
+    font-family: 'Comfortaa', sans-serif;
+    padding: 20px;
 }
 
 @media(max-width: 992px) {

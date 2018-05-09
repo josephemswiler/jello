@@ -3,11 +3,6 @@ const db = require("../models");
 module.exports = function (app) {
 
     app.get('/', function (req, res) {
-        let index = 0
-
-        // if(req.params.id)
-        //     index = parseInt(req.params.id)
-
         db.Boards.findAll({
             include: [{
                 model: db.Lists,
@@ -39,9 +34,8 @@ module.exports = function (app) {
                     })
                 })
             })
-            res.render('index', {
-                Boards: boardData,
-                currentBoard: boardData[index]
+            res.render('landing', {
+                Boards: boardData
             })
         })
     })
@@ -83,9 +77,9 @@ module.exports = function (app) {
                     })
                 })
             })
-            let matchingBoard = boardData.filter( item => (item.id === index) ? true : false )
+            let matchingBoard = boardData.filter(item => (item.id === index) ? true : false)
 
-            if( matchingBoard[0] ){
+            if (matchingBoard[0]) {
                 matchingBoard = matchingBoard[0]
             }
             res.render('index', {
@@ -216,13 +210,13 @@ module.exports = function (app) {
 
     //Delete
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
-    app.delete("/api/boards/:id", (req, res) => {          
-            db.Boards.destroy({
-                where: {
-                    id: req.params.id
-                }
-            }).then(data => res.json(data))
-        })
+    app.delete("/api/boards/:id", (req, res) => {
+        db.Boards.destroy({
+            where: {
+                id: req.params.id
+            }
+        }).then(data => res.json(data))
+    })
 
     app.delete("/api/lists/:id", (req, res) => {
         db.Cards.destroy({

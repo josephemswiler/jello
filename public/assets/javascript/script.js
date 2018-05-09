@@ -549,6 +549,8 @@
             starred: 0
         })
 
+        $(`.nav-boards[data-id="${updatingBoardId}"]`).text($('.board-title').children('.card-content').text())
+
         currentText = ''
 
         updatingBoardId = null
@@ -624,9 +626,10 @@
             .removeClass('lighten-2')
     })
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.board-wrapper').fadeIn('slow')
         $('.card-wrapper').fadeIn('slow')
+        $('.landing-wrapper').fadeIn('slow')
     })
 
     //db CRUD Functions

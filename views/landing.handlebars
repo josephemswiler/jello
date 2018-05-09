@@ -1,0 +1,34 @@
+<div class="wrapper">
+    {{> nav }}
+    <div class="container landing-wrapper center-align center">
+        <div class="card instructions">
+            <div class="card-content white-text">
+                <span class="card-title">Hello!
+                    <br> And welcome to...
+                    <h1 class="brand-logo">Jello!</h1>
+                </span>
+                <p> Jello is a clone of a popular web-based project management application. Each board contains a collection
+                    of lists. Each list contains a collection of cards. Drag and drop cards to different lists. To get started,
+                    select a board below or create a new board!</p>
+            </div>
+        </div>
+        <ul>
+            {{#each Boards}}
+            <li>
+                <div class="card">
+                    <div class="card-content">
+                        <a class="red-text nav-boards drop-{{id}}" data-id="{{id}}" href="/{{id}}">{{name}}</a>
+                    </div>
+                </div>
+            </li>
+            {{/each}}
+            <li>
+                <div class="card">
+                    <div class="card-content">
+                        <a class="grey-text add-board drop-new" href="#">Add New Board...</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
