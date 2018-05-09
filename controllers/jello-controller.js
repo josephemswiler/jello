@@ -83,9 +83,16 @@ module.exports = function (app) {
                     })
                 })
             })
+
+            let matchingBoard = boardData.filter( item => (item.id === index) ? true : false )
+
+            if( matchingBoard[0] ){
+                matchingBoard = matchingBoard[0]
+            }
+
             res.render('index', {
                 Boards: boardData,
-                currentBoard: boardData[index]
+                currentBoard: matchingBoard
             })
         })
     })
@@ -211,20 +218,13 @@ module.exports = function (app) {
 
     //Delete
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
-    app.delete("/api/boards/:id", (req, res) => {
-        db.Lists.destroy({
-            where: {
-                board_id: req.params.id
-            }
-        }).then(() => {
-
+    app.delete("/api/boards/:id", (req, res) => {          
             db.Boards.destroy({
                 where: {
                     id: req.params.id
                 }
-            })
-        }).then(data => res.json(data))
-    })
+            }).then(data => res.json(data))
+        })
 
     app.delete("/api/lists/:id", (req, res) => {
         db.Cards.destroy({

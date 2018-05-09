@@ -180,7 +180,9 @@
                 list_id: $(this).closest('.active-card')[0].dataset.id,
                 starred: 0
             })
-            makeCard({ id: $(this).closest('.inner-card-wrapper')[0].dataset.id })
+            makeCard({
+                id: $(this).closest('.inner-card-wrapper')[0].dataset.id
+            })
         }
 
         $(this)
@@ -488,10 +490,24 @@
 
     })
 
+    //Board - Create
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+
+    $(document).on('click', '.add-board', function () {
+        dbCreateBoard('boards', {
+            name: 'New Board'
+        })
+    })
+
+    function makeBoard(data) {
+        window.location.replace(`/${data.id}`)
+    }
+
     //Board - Update
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.board-title', function () {
-        $('.rename-board').show()
+        $('.rename-board')
+            .show()
 
         $('#board-rename-input')
             .val($(this).children('.card-content').text())
@@ -535,6 +551,62 @@
 
         $('.rename-board').hide()
     })
+
+    //Board - Delete
+    //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
+    $(document).on('click', '.delete-board-btn', function (event) {
+        event.preventDefault()
+
+        let boardLists = $('.active-card').get().map(function (element) {
+            return element.dataset.id
+        })
+
+        boardLists.forEach(id => dbDelete('lists', id))
+
+        dbDelete('boards', $('.board-wrapper')[0].dataset.id)
+
+        // $('.board-wrapper').fadeOut(function () {
+        //     deleteBoardLists(boardLists)
+        //         .then( () => dbDelete('boards', $('.board-wrapper')[0].dataset.id))
+        // })
+
+        $('.board-wrapper').fadeOut()
+        $('.card-wrapper').fadeOut()
+        $('.rename-board').fadeOut()
+
+        // for (let i in boardLists) {
+        //     dbDelete('lists', boardLists[i])
+        // }
+
+        dbDeleteBoardLists($('.board-wrapper')[0].dataset.id, boardLists)
+        // .then(function (data) { return dbDelete('boards', $('.board-wrapper')[0].dataset.id)})
+        // .then(() => window.location.replace('/'))
+
+
+
+
+        //     dbDelete({})
+
+        // console.log(lists)
+
+        //here delete lists then delete board, remove list destroy from board destroy
+
+        // dbDelete('boards', $('.board-wrapper')[0].dataset.id)
+
+        // window.location.replace('/')
+
+        // $.get('/', function (data) {
+        //     return data
+        // }).then(data => {
+
+        // })
+
+    })
+
+    function deleteBoardLists(lists) {
+        for (let i in lists)
+            dbDelete('lists', lists[i])
+    }
 
     //Materialize - Responsive Elements & Additional Highlighting
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
@@ -590,6 +662,12 @@
         }).then(data => makeList(data))
     }
 
+    function dbCreateBoard(table, object) {
+        $.post(`/api/${table}`, object, function (data) {
+            return data
+        }).then(data => makeBoard(data))
+    }
+
     function dbRead(table) {
         $.get(`/api/${table}`, function (data) {})
     }
@@ -609,6 +687,10 @@
         }).then(function (data) {})
     }
 
-
+    function dbDeleteBoardLists(boardId, boardLists) {
+        boardLists.forEach(id => dbDelete('lists', id))
+    }
 
 })() //IIFE
+
+//add list remove btn, delete list

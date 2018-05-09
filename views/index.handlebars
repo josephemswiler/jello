@@ -7,14 +7,14 @@
                     <i class="fas fa-bars"></i>
                 </a>
                 <ul class="left hide-on-med-and-down">
-                    {{!-- <li class="active">
+                    <li class="active">
                         <a class="dropdown-trigger" href="#!" data-target="dropdown">Boards
                             <i class="material-icons right">arrow_drop_down</i>
                         </a>
                     </li>
                     <li>
                         <a href="/about">About</a>
-                    </li> --}}
+                    </li>
                     <li>
                         <a href="https://github.com/josephemswiler" target="_blank">
                             <i class="fab fa-github"></i>
@@ -43,12 +43,12 @@
         </li>
         {{/each}}
         <li>
-            <a class="grey-text drop-new" href="/new">Add New Board...</a>
+            <a class="grey-text add-board drop-new" href="#">Add New Board...</a>
         </li>
     </ul>
     <!-- /#dropdown -->
     <ul id="mobile-sidenav" class="sidenav left">
-        {{!-- <li class="active">
+        <li class="active">
             <a class="dropdown-trigger" href="#!" data-target="mobile-dropdown">Boards
                 <i class="material-icons right">arrow_drop_down</i>
             </a>
@@ -56,7 +56,7 @@
         </li>
         <li>
             <a href="/about">About</a>
-        </li> --}}
+        </li>
         <li>
             <a href="https://github.com/josephemswiler" target="_blank">
                 <i class="fab fa-github"></i>
@@ -81,12 +81,15 @@
             <a class="red-text change-board drop-{{id}}" data-id="{{id}}" href="/{{id}}">{{name}}</a>
         </li>
         {{/each}}
+        <li>
+            <a class="grey-text add-board drop-new" href="#">Add New Board...</a>
+        </li>
     </ul>
     <!-- /#mobile-dropdown -->
     <div class="board-wrapper" data-id="{{currentBoard.id}}">
         <div class="card board-title outer-card">
 
-            <div id="board-{{currentBoard.id}}" class="card-content grey-text text-lighten-2">{{currentBoard.name}}</div>
+            <div id="board-{{currentBoard.id}}" class="card-content grey-text current-board-name text-lighten-2">{{currentBoard.name}}</div>
         </div>
         <div class="card board-star outer-card">
             <a class="card-content board-fav-star grey-text text-lighten-2 material-icons">star_border</a>
@@ -107,6 +110,7 @@
                         </div>
                     </div>
                     <button class="rename-board-btn waves-effect waves-light btn green darken-1 white-text">Rename</button>
+                    <button class="delete-board-btn waves-effect waves-light btn red right darken-1 white-text">Delete</button>
                 </form>
             </div>
         </div>
