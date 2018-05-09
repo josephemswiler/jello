@@ -404,37 +404,6 @@
 
     function makeList(data) {
 
-        // let dropA = $('<a>')
-        //     .addClass('red-text remove-list-btn')
-        //     .attr('href', '#')
-        //     .text('Remove List...')
-
-        // let dropLi = $('<li>')
-        //     .append(dropA)
-
-        // let dropUl = $('<ul>')
-        //     .append(dropLi)
-
-        // let dropHr = $('<hr>')
-
-        // let dropClose = $('<div>')
-        //     .addClass('right-align close-remove-list')
-        //     .html('<i class="material-icons">close</i>')
-
-        // let dropCard = $('<div>')
-        //     .addClass('card-content grey-text center-align')
-        //     .text('List Actions')
-        //     .append(dropClose, dropHr, dropUl)
-
-        // let dropDiv = $('<div>')
-        //     .attr({
-        //         'id': `remove-list-${data.id}`,
-        //         'data-id': `${data.id}`
-        //     })
-        //     .addClass('dropdown-content remove-list card')
-        //     .append(dropCard)
-        //Above adds dropdown at ellipsis "..." button
-
         let addText = $('<div>')
             .addClass('add-card-btn card-content')
             .text('Add a card...')
@@ -446,14 +415,6 @@
         let cardData = $('<div>')
             .addClass('card-data')
 
-        // let a = $('<a>')
-        //     .addClass('grey grey-text ellipsis-btn right center-align lighten-3 dropdown-trigger')
-        //     .attr({
-        //         'href': '#!',
-        //         'data-target': `remove-list-${data.id}`
-        //     })
-        //     .text('...')
-
         let strong = $('<strong>')
             .addClass('list-name')
             .attr('contenteditable', 'true')
@@ -462,7 +423,6 @@
         let name = $('<div>')
             .addClass('card-name')
             .append(strong)
-            // .append(a, dropDiv)
 
         let content = $('<div>')
             .addClass('card-content grey lighten-3')
