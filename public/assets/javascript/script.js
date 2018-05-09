@@ -138,6 +138,7 @@
             .append(edit, close)
 
         addingCard = false
+
         cardOpen = false
 
         initDrag()
@@ -171,6 +172,9 @@
                 text: $('.open-card').text().trim(),
                 list_id: $(this).closest('.active-card')[0].dataset.id
             })
+            $(this)
+                .closest('.inner-card-wrapper')
+                .addClass('drag-wrapper ui-draggable ui-draggable-handle')
         }
 
         if ($(this).text() === 'Done') {
@@ -183,11 +187,14 @@
             makeCard({
                 id: $(this).closest('.inner-card-wrapper')[0].dataset.id
             })
+            $(this)
+                .closest('.inner-card-wrapper')
+                .addClass('drag-wrapper ui-draggable ui-draggable-handle')
+                .draggable('enable')
         }
 
-        $(this)
-            .closest('.inner-card-wrapper')
-            .addClass('drag-wrapper ui-draggable ui-draggable-handle')
+
+
         $(this)
             .remove()
         $('.close-open-card')
@@ -252,6 +259,11 @@
             makeCard({
                 id: $('.open-card')[0].dataset.id
             })
+
+            $(this)
+                .closest('.inner-card-wrapper')
+                .addClass('drag-wrapper ui-draggable ui-draggable-handle')
+                .draggable('enable')
 
             $(this)
                 .siblings('.open-card-btn')
@@ -332,7 +344,7 @@
             .text('Save')
 
         let close = $('<i>')
-            .addClass('material-icons close-btn close-save-list close-card-wrapper')
+            .addClass('material-icons close-btn close-save-list')
             .text('close')
 
         let div = $('<div>')
@@ -369,6 +381,7 @@
     $(document).on('click', '.close-save-list', function () {
         resetAddList()
         cardOpen = false
+        addingCard = false
     })
 
     $(document).on('click', '.save-list-btn', function () {
@@ -671,5 +684,3 @@
         }).then(function (data) {})
     }
 })() //IIFE
-
-//add list remove btng
