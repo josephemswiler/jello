@@ -83,13 +83,11 @@ module.exports = function (app) {
                     })
                 })
             })
-
             let matchingBoard = boardData.filter( item => (item.id === index) ? true : false )
 
             if( matchingBoard[0] ){
                 matchingBoard = matchingBoard[0]
             }
-
             res.render('index', {
                 Boards: boardData,
                 currentBoard: matchingBoard
@@ -97,11 +95,11 @@ module.exports = function (app) {
         })
     })
 
-    app.get('/about', (req, res) => {
+    app.get('/about/jello', (req, res) => {
         res.render('index')
     })
 
-    app.get('/api', (req, res) => {
+    app.get('/api/all', (req, res) => {
         db.Boards.findAll({
             include: [{
                 model: db.Lists,

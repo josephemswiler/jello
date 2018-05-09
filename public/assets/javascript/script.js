@@ -380,6 +380,7 @@
         }
 
         addingCard = false
+
         cardOpen = false
 
         dbCreateList('lists', {
@@ -474,6 +475,7 @@
             })
 
             currentText = ''
+
             updatingListId = null
         }
     })
@@ -515,6 +517,7 @@
             .select()
 
         currentText = $('#board-rename-input').val()
+
         updatingBoardId = $('.board-wrapper')[0].dataset.id
     })
 
@@ -547,6 +550,7 @@
         })
 
         currentText = ''
+
         updatingBoardId = null
 
         $('.rename-board').hide()
@@ -563,50 +567,22 @@
 
         boardLists.forEach(id => dbDelete('lists', id))
 
-        dbDelete('boards', $('.board-wrapper')[0].dataset.id)
-
-        // $('.board-wrapper').fadeOut(function () {
-        //     deleteBoardLists(boardLists)
-        //         .then( () => dbDelete('boards', $('.board-wrapper')[0].dataset.id))
-        // })
-
-        $('.board-wrapper').fadeOut()
-        $('.card-wrapper').fadeOut()
-        $('.rename-board').fadeOut()
-
-        // for (let i in boardLists) {
-        //     dbDelete('lists', boardLists[i])
-        // }
-
-        dbDeleteBoardLists($('.board-wrapper')[0].dataset.id, boardLists)
-        // .then(function (data) { return dbDelete('boards', $('.board-wrapper')[0].dataset.id)})
-        // .then(() => window.location.replace('/'))
-
-
-
-
-        //     dbDelete({})
-
-        // console.log(lists)
-
-        //here delete lists then delete board, remove list destroy from board destroy
-
-        // dbDelete('boards', $('.board-wrapper')[0].dataset.id)
-
-        // window.location.replace('/')
-
-        // $.get('/', function (data) {
-        //     return data
-        // }).then(data => {
-
-        // })
-
+        window.location.replace('/')
     })
 
-    function deleteBoardLists(lists) {
-        for (let i in lists)
-            dbDelete('lists', lists[i])
-    }
+    $(document).ready(function () {
+        if (window.location.pathname !== '/')
+            return
+
+        $.get('/api/all').then(data => {
+            data.forEach(board => {
+                if (board.Lists.length === 0) {
+                    dbDelete('boards', board.id)
+                    $(`.nav-boards[data-id="${board.id}"]`).closest('li').remove()
+                }
+            })
+        })
+    })
 
     //Materialize - Responsive Elements & Additional Highlighting
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
@@ -669,7 +645,7 @@
     }
 
     function dbRead(table) {
-        $.get(`/api/${table}`, function (data) {})
+        $.get(`/api/${table}`, function (data) {}).then(data => readData(data))
     }
 
     function dbUpdate(table, object) {
@@ -686,11 +662,6 @@
             url: `/api/${table}/${id}`
         }).then(function (data) {})
     }
-
-    function dbDeleteBoardLists(boardId, boardLists) {
-        boardLists.forEach(id => dbDelete('lists', id))
-    }
-
 })() //IIFE
 
-//add list remove btn, delete list
+//add list remove btn
