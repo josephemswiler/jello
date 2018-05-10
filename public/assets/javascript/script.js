@@ -18,7 +18,6 @@
 
     mobileAndTabletcheck()
 
-    $('.check-device').text(check)
     //Dynamically set max-height of list based on window size
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     function setHeight() {
@@ -679,28 +678,30 @@
             return
         }
 
-        // let maxHeight = parseInt($('.card-data').css('max-height').replace(/\D/g, ''))
+        if(check)
+            return
+        let maxHeight = parseInt($('.card-data').css('max-height').replace(/\D/g, ''))
 
-        // let lists = $('.active-card').get().map(function (element) {
-        //     let scroll = false
+        let lists = $('.active-card').get().map(function (element) {
+            let scroll = false
 
-        //     if (element.children[0].children[1].scrollHeight > maxHeight)
-        //         scroll = true
+            if (element.children[0].children[1].scrollHeight > maxHeight)
+                scroll = true
 
-        //     let obj = {
-        //         'dataId': element.dataset.id,
-        //         'scrolling': scroll
-        //     }
-        //     return obj
-        // })
+            let obj = {
+                'dataId': element.dataset.id,
+                'scrolling': scroll
+            }
+            return obj
+        })
 
-        // lists.forEach(item => {
-        //     if (item.scrolling) {
-        //         $(`.card-scroll[data-id="${item.dataId}`).removeClass('flip').addClass('animated rotateIn').show()
-        //     } else if (!item.scrolling) {
-        //         $(`.card-scroll[data-id="${item.dataId}`).removeClass('flip animated rotateIn').fadeOut()
-        //     } else {}
-        // })
+        lists.forEach(item => {
+            if (item.scrolling) {
+                $(`.card-scroll[data-id="${item.dataId}`).removeClass('flip').addClass('animated rotateIn').show()
+            } else if (!item.scrolling) {
+                $(`.card-scroll[data-id="${item.dataId}`).removeClass('flip animated rotateIn').fadeOut()
+            } else {}
+        })
     }
 
     $(document).on('click', '.card-scroll', function () {
