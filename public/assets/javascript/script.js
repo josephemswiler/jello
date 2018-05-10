@@ -592,7 +592,7 @@
         })
     })
 
-    //Materialize - Responsive Elements & Additional Highlighting
+    //Materialize - Responsive Elements & Additional Scripting
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $('.sidenav').sidenav()
     $('.tooltipped').tooltip()
