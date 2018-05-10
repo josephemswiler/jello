@@ -16,6 +16,8 @@
         return check
     }
 
+    mobileAndTabletcheck()
+
     $('.check-device').text(check)
     //Dynamically set max-height of list based on window size
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
