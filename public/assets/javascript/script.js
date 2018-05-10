@@ -15,6 +15,7 @@
 
     $(window).resize(function () {
         setHeight()
+        checkHeight()
     })
 
     //jQuery UI
@@ -404,6 +405,14 @@
 
     function makeList(data) {
 
+        let floatBtn = $('<a>')
+            .addClass('card-scroll btn-floating btn-large waves-effect waves-light red')
+            .html('<i class="material-icons">keyboard_arrow_down</i>')
+            .attr({
+                'id': `list-${data.id}`,
+                'data-id': data.id
+            })
+
         let addText = $('<div>')
             .addClass('add-card-btn card-content')
             .text('Add a card...')
@@ -435,7 +444,7 @@
                 'id': `list-${data.id}`,
                 'data-id': data.id
             })
-            .append(content, addCard)
+            .append(content, floatBtn, addCard)
 
         resetAddList()
 
@@ -636,6 +645,89 @@
         $('.board-wrapper').fadeIn('slow')
         $('.card-wrapper').fadeIn('slow')
         $('.landing-wrapper').fadeIn('slow')
+        checkHeight()
+    })
+
+    function checkHeight() {
+        if (window.location.pathname === '/') {
+            if ($('.landing-wrapper')[0].scrollHeight > $(window).height() - 100) {
+                $('.landing-scroll').removeClass('flip').addClass('animated rotateIn').show()
+            } else {
+                $('.landing-scroll').removeClass('flip animated rotateIn').fadeOut()
+            }
+            return
+        }
+
+        let maxHeight = parseInt($('.card-data').css('max-height').replace(/\D/g, ''))
+
+        let lists = $('.active-card').get().map(function (element) {
+            let scroll = false
+
+            if (element.children[0].children[1].scrollHeight > maxHeight)
+                scroll = true
+
+            let obj = {
+                'dataId': element.dataset.id,
+                'scrolling': scroll
+            }
+            return obj
+        })
+
+        lists.forEach(item => {
+            if (item.scrolling) {
+                $(`.card-scroll[data-id="${item.dataId}`).removeClass('flip').addClass('animated rotateIn').show()
+            } else if (!item.scrolling) {
+                $(`.card-scroll[data-id="${item.dataId}`).removeClass('flip animated rotateIn').fadeOut()
+            } else {}
+        })
+    }
+
+    $(document).mouseup(function () {
+        checkHeight()
+    })
+
+    $(document).on('click', '.card-scroll', function () {
+
+        let icon = $(this).children('i')
+
+        let card = $(this).siblings('.card-content').children('.card-data')
+
+        if (!icon.hasClass('flip')) {
+
+            card.animate({
+                scrollTop: card.prop('scrollHeight')
+            }, 1000)
+
+            icon.toggleClass('flip')
+        } else {
+            card.animate({
+                scrollTop: 0
+            }, 1000)
+
+            icon.toggleClass('flip')
+        }
+    })
+
+    $(document).on('click', '.landing-scroll', function () {
+
+        let icon = $(this).children('i')
+
+        let card = $(this).closest('.landing-wrapper')
+
+        if (!icon.hasClass('flip')) {
+
+            card.animate({
+                scrollTop: card.prop('scrollHeight')
+            }, 1000)
+
+            icon.toggleClass('flip')
+        } else {
+            card.animate({
+                scrollTop: 0
+            }, 1000)
+
+            icon.toggleClass('flip')
+        }
     })
 
     //db CRUD Functions
