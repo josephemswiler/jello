@@ -37,6 +37,7 @@
             drop: function (event, ui) {
                 $(this).children('.card-data').append($(ui.draggable))
                 updateList($(this).closest('.outer-card')[0].dataset.id, $(ui.draggable)[0].dataset.id, $(ui.draggable).text().trim())
+                checkHeight()
             }
         })
 
@@ -48,6 +49,7 @@
             drop: function (event, ui) {
                 $(this).siblings('.card-content').children('.card-data').append($(ui.draggable))
                 updateList($(this).closest('.outer-card')[0].dataset.id, $(ui.draggable)[0].dataset.id, $(ui.draggable).text().trim())
+                checkHeight()
             }
         })
     }
@@ -681,10 +683,6 @@
             } else {}
         })
     }
-
-    $(document).mouseup(function () {
-        checkHeight()
-    })
 
     $(document).on('click', '.card-scroll', function () {
 
