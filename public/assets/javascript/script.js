@@ -15,7 +15,7 @@
 
     $(window).resize(function () {
         setHeight()
-        // checkHeight()
+        checkHeight()
     })
 
     //jQuery UI
@@ -642,90 +642,90 @@
         $('.board-wrapper').fadeIn('slow')
         $('.card-wrapper').fadeIn('slow')
         $('.landing-wrapper').fadeIn('slow')
-        // checkHeight()
+        checkHeight()
     })
 
-    // function checkHeight() {
-    //     if (window.location.pathname === '/') {
-    //         if ($('.landing-wrapper')[0].scrollHeight > $(window).height() - 100) {
-    //             $('.landing-scroll').removeClass('flip').addClass('animated rotateIn').show()
-    //         } else {
-    //             $('.landing-scroll').removeClass('flip animated rotateIn').fadeOut()
-    //         }
-    //         return
-    //     }
+    function checkHeight() {
+        if (window.location.pathname === '/') {
+            if ($('.landing-wrapper')[0].scrollHeight > $(window).height() - 100) {
+                $('.landing-scroll').removeClass('flip').addClass('animated rotateIn').show()
+            } else {
+                $('.landing-scroll').removeClass('flip animated rotateIn').fadeOut()
+            }
+            return
+        }
 
-    //     let maxHeight = parseInt($('.card-data').css('max-height').replace(/\D/g, ''))
+        let maxHeight = parseInt($('.card-data').css('max-height').replace(/\D/g, ''))
 
-    //     let lists = $('.active-card').get().map(function (element) {
-    //         let scroll = false
+        let lists = $('.active-card').get().map(function (element) {
+            let scroll = false
 
-    //         if (element.children[0].children[1].scrollHeight > maxHeight)
-    //             scroll = true
+            if (element.children[0].children[1].scrollHeight > maxHeight)
+                scroll = true
 
-    //         let obj = {
-    //             'dataId': element.dataset.id,
-    //             'scrolling': scroll
-    //         }
-    //         return obj
-    //     })
+            let obj = {
+                'dataId': element.dataset.id,
+                'scrolling': scroll
+            }
+            return obj
+        })
 
-    //     lists.forEach(item => {
-    //         if (item.scrolling) {
-    //             $(`.card-scroll[data-id="${item.dataId}`).removeClass('flip').addClass('animated rotateIn').show()
-    //         } else if (!item.scrolling) {
-    //             $(`.card-scroll[data-id="${item.dataId}`).removeClass('flip animated rotateIn').fadeOut()
-    //         } else {}
-    //     })
-    // }
+        lists.forEach(item => {
+            if (item.scrolling) {
+                $(`.card-scroll[data-id="${item.dataId}`).removeClass('flip').addClass('animated rotateIn').show()
+            } else if (!item.scrolling) {
+                $(`.card-scroll[data-id="${item.dataId}`).removeClass('flip animated rotateIn').fadeOut()
+            } else {}
+        })
+    }
 
-    // $(document).on('click', '.card-scroll', function () {
+    $(document).on('click', '.card-scroll', function () {
 
-    //     let icon = $(this).children('i')
+        let icon = $(this).children('i')
 
-    //     let card = $(this).siblings('.card-content').children('.card-data')
+        let card = $(this).siblings('.card-content').children('.card-data')
 
-    //     if (!icon.hasClass('flip')) {
+        if (!icon.hasClass('flip')) {
 
-    //         card.animate({
-    //             scrollTop: card.prop('scrollHeight')
-    //         }, 1000)
+            card.animate({
+                scrollTop: card.prop('scrollHeight')
+            }, 1000)
 
-    //         icon.toggleClass('flip')
-    //     } else {
-    //         card.animate({
-    //             scrollTop: 0
-    //         }, 1000)
+            icon.toggleClass('flip')
+        } else {
+            card.animate({
+                scrollTop: 0
+            }, 1000)
 
-    //         icon.toggleClass('flip')
-    //     }
-    // })
+            icon.toggleClass('flip')
+        }
+    })
 
-    // $(document).on('click', '.landing-scroll', function () {
+    $(document).on('click', '.landing-scroll', function () {
 
-    //     let icon = $(this).children('i')
+        let icon = $(this).children('i')
 
-    //     let card = $(this).closest('.landing-wrapper')
+        let card = $(this).closest('.landing-wrapper')
 
-    //     if (!icon.hasClass('flip')) {
+        if (!icon.hasClass('flip')) {
 
-    //         card.animate({
-    //             scrollTop: card.prop('scrollHeight')
-    //         }, 1000)
+            card.animate({
+                scrollTop: card.prop('scrollHeight')
+            }, 1000)
 
-    //         icon.toggleClass('flip')
-    //     } else {
-    //         card.animate({
-    //             scrollTop: 0
-    //         }, 1000)
+            icon.toggleClass('flip')
+        } else {
+            card.animate({
+                scrollTop: 0
+            }, 1000)
 
-    //         icon.toggleClass('flip')
-    //     }
-    // })
+            icon.toggleClass('flip')
+        }
+    })
 
-    // $(document).mouseup(function() {
-    //     checkHeight()
-    // })
+    $(document).mouseup(function() {
+        checkHeight()
+    })
 
     //db CRUD Functions
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
