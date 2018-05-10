@@ -81,9 +81,18 @@
 
         cardOpen = true
 
-        $('.card-data').animate({
-            scrollTop: $('.card-data').prop('scrollHeight')
+        let scrollCard = $(this)
+            .closest('.outer-card')
+            .find('.card-data')
+
+        scrollCard.animate({
+            scrollTop: scrollCard.prop('scrollHeight')
         }, 1000)
+
+        let icon = $(this)
+            .closest('.outer-card')
+            .find('.init-flip')
+            .addClass('flip')
 
         let p = $('<p>')
             .addClass('open-card')
@@ -643,6 +652,7 @@
         $('.card-wrapper').fadeIn('slow')
         $('.landing-wrapper').fadeIn('slow')
         checkHeight()
+        $('.card-scroll').removeClass('flip').addClass('animated rotateIn').show()
     })
 
     function checkHeight() {
@@ -655,28 +665,28 @@
             return
         }
 
-        let maxHeight = parseInt($('.card-data').css('max-height').replace(/\D/g, ''))
+        // let maxHeight = parseInt($('.card-data').css('max-height').replace(/\D/g, ''))
 
-        let lists = $('.active-card').get().map(function (element) {
-            let scroll = false
+        // let lists = $('.active-card').get().map(function (element) {
+        //     let scroll = false
 
-            if (element.children[0].children[1].scrollHeight > maxHeight)
-                scroll = true
+        //     if (element.children[0].children[1].scrollHeight > maxHeight)
+        //         scroll = true
 
-            let obj = {
-                'dataId': element.dataset.id,
-                'scrolling': scroll
-            }
-            return obj
-        })
+        //     let obj = {
+        //         'dataId': element.dataset.id,
+        //         'scrolling': scroll
+        //     }
+        //     return obj
+        // })
 
-        lists.forEach(item => {
-            if (item.scrolling) {
-                $(`.card-scroll[data-id="${item.dataId}`).removeClass('flip').addClass('animated rotateIn').show()
-            } else if (!item.scrolling) {
-                $(`.card-scroll[data-id="${item.dataId}`).removeClass('flip animated rotateIn').fadeOut()
-            } else {}
-        })
+        // lists.forEach(item => {
+        //     if (item.scrolling) {
+        //         $(`.card-scroll[data-id="${item.dataId}`).removeClass('flip').addClass('animated rotateIn').show()
+        //     } else if (!item.scrolling) {
+        //         $(`.card-scroll[data-id="${item.dataId}`).removeClass('flip animated rotateIn').fadeOut()
+        //     } else {}
+        // })
     }
 
     $(document).on('click', '.card-scroll', function () {
@@ -691,13 +701,11 @@
                 scrollTop: card.prop('scrollHeight')
             }, 1000)
 
-            icon.toggleClass('flip')
+            icon.addClass('flip')
         } else {
             card.animate({
                 scrollTop: 0
             }, 1000)
-
-            icon.toggleClass('flip')
         }
     })
 
@@ -713,18 +721,43 @@
                 scrollTop: card.prop('scrollHeight')
             }, 1000)
 
-            icon.toggleClass('flip')
+            icon.addClass('flip')
         } else {
             card.animate({
                 scrollTop: 0
             }, 1000)
-
-            icon.toggleClass('flip')
         }
     })
 
-    $(document).mouseup(function() {
+    $(document).mouseup(function () {
         checkHeight()
+    })
+
+    $('.card-data').scroll(function () {
+        if ($(this).scrollTop() === 0) {
+            $(this)
+                .closest('.outer-card')
+                .find('.init-flip')
+                .removeClass('flip')
+
+        } else {
+            $(this)
+                .closest('.outer-card')
+                .find('.init-flip')
+                .addClass('flip')
+        }
+    })
+
+    $('.landing-wrapper').scroll(function () {
+        if ($(this).scrollTop() === 0) {
+            $(this)
+                .find('.init-flip')
+                .removeClass('flip')
+        } else {
+            $(this)
+                .find('.init-flip')
+                .addClass('flip')
+        }
     })
 
     //db CRUD Functions
