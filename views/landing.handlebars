@@ -15,19 +15,11 @@
         <ul>
             {{#each Boards}}
             <li>
-                <div class="card">
-                    <div class="card-content">
-                        <a class="red-text nav-boards drop-{{id}}" data-id="{{id}}" href="/{{id}}">{{name}}</a>
-                    </div>
-                </div>
+                <a class="red-text white waves-effect landing-btn waves-light btn nav-boards drop-{{id}}" data-id="{{id}}" href="/{{id}}">{{name}}</a>
             </li>
             {{/each}}
             <li>
-                <div class="card">
-                    <div class="card-content">
-                        <a class="grey-text add-board drop-new" href="#">Add New Board...</a>
-                    </div>
-                </div>
+                <a class="grey-text white waves-effect landing-btn waves-light btn add-board drop-new" href="#">Add New Board...</a>
             </li>
         </ul>
     </div>

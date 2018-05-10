@@ -218,6 +218,11 @@ body {
     max-height: 100%;
 }
 
+.landing-btn {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
 .instructions {
     background: rgba(0, 0, 0, 0);
     background-image: linear-gradient(to right bottom, #546e7a80, #5372a980, #a35eb580, #f1287e80, #ff3d0080);
