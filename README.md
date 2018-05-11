@@ -11,7 +11,6 @@ See the project here: [Jello](https://hello-jello.herokuapp.com/ "Jello").
 **Technology Used**
 ---
 - HTML5
-  - Handlebars
 - CSS3
   - Materialize CSS
 - JavaScript ES6
@@ -21,6 +20,7 @@ See the project here: [Jello](https://hello-jello.herokuapp.com/ "Jello").
   - Sequel Pro
   - Sequelize
 - Express
+  - Handlebars
 - Heroku
   - JawsDB
 - JSON / AJAX
