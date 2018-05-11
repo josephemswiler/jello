@@ -30,3 +30,7 @@ CREATE TABLE cards
 	PRIMARY KEY (id),
 	FOREIGN KEY(list_id) REFERENCES lists(id) 
 );
+
+--JawsDB
+
+USE ...;

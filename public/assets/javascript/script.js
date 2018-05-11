@@ -55,7 +55,12 @@
             activeClass: 'ui-state-default',
             hoverClass: 'ui-state-hover',
             drop: function (event, ui) {
-                $(this).children('.card-data').append($(ui.draggable))
+                let element = $(this).children('.card-data')
+                element.append($(ui.draggable))
+                element.animate({
+                    scrollTop: element.prop('scrollHeight')
+                }, 1000)
+
                 updateList($(this).closest('.outer-card')[0].dataset.id, $(ui.draggable)[0].dataset.id, $(ui.draggable).text().trim())
             }
         })
@@ -66,7 +71,11 @@
             activeClass: 'ui-state-default',
             hoverClass: 'ui-state-hover',
             drop: function (event, ui) {
-                $(this).siblings('.card-content').children('.card-data').append($(ui.draggable))
+                let element = $(this).siblings('.card-content').children('.card-data')
+                element.append($(ui.draggable))
+                element.animate({
+                    scrollTop: element.prop('scrollHeight')
+                }, 1000)
                 updateList($(this).closest('.outer-card')[0].dataset.id, $(ui.draggable)[0].dataset.id, $(ui.draggable).text().trim())
             }
         })
