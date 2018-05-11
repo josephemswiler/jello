@@ -16,6 +16,8 @@ See the project here: [Jello](https://hello-jello.herokuapp.com/ "Jello").
 - JavaScript ES6
   - jQuery 3
   - jQuery UI
+- Node JS
+  - npm
 - MySQL
   - Sequel Pro
   - Sequelize
