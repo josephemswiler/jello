@@ -100,13 +100,11 @@
     //-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-//
     $(document).on('click', '.add-card-btn', function () {
 
-        if (addingCard)
-            return
+        if (addingCard || cardOpen) {
+            $('.open-card-btn').closest('.inner-card-wrapper').remove()
+        }
 
         addingCard = true
-
-        if (cardOpen)
-            return
 
         cardOpen = true
 
@@ -193,6 +191,7 @@
 
     $(document).on('click', '.open-card-btn', function () {
         if ($('.open-card').text().trim() === '' && $(this).text() === 'Add') {
+            $(this).closest('.inner-card-wrapper').remove()
             addingCard = false
             cardOpen = false
             return
@@ -329,7 +328,7 @@
     $(document).on('click', '.add-list-btn', function () {
 
         if (cardOpen) {
-            return
+            $('.open-card-btn').closest('.inner-card-wrapper').remove()
         }
 
         addingCard = true
@@ -641,6 +640,7 @@
     $('.sidenav').sidenav()
     $('.tooltipped').tooltip()
     $('.dropdown-trigger').dropdown()
+    $('.modal').modal()
 
     $(document).on('mouseenter', '.add-card-btn-wrapper', function () {
         $(this)
