@@ -23,6 +23,8 @@
             .text('Certain features are unavailable on mobile devices. Please visit this site from a desktop!')
         $('.add-card-btn')
             .text('Feature unavailable via mobile...')
+        $('.mobile-note')
+            .show()
     }
 
     //Dynamically set max-height of list based on window size

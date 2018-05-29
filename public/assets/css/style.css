@@ -23,7 +23,8 @@ body {
 
 .board-wrapper,
 .card-wrapper,
-.landing-wrapper {
+.landing-wrapper,
+.mobile-note {
     display: none;
 }
 
