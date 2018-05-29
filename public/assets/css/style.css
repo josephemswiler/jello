@@ -169,13 +169,24 @@ body {
     opacity: 1;
 }
 
-.close-card-wrapper,
-.close-save-list {
+.close-card-wrapper {
     margin-left: 10px;
     font-size: 40px;
     vertical-align: middle;
     padding-bottom: 6px;
     opacity: .4;
+}
+
+.close-save-list {
+    margin-left: 10px;
+    font-size: 40px;
+    vertical-align: middle;
+    padding-top: 1px;
+    opacity: .4;
+}
+
+.dynamic-close-btn {
+    font-size: 20px;
 }
 
 .hover-options {

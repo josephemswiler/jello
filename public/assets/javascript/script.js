@@ -441,6 +441,18 @@
 
     function makeList(data) {
 
+        let dynamicClose = $('<i>')
+            .addClass('material-icons dynamic-close-btn remove-list-btn')
+            .text('close')
+
+        let a = $('<a>')
+            .addClass('grey grey-text ellipsis-btn right center-align lighten-3 dropdown-trigger')
+            .attr({
+                'href': '#!',
+                'data-target': `remove-list-${data.id}`
+            })
+            .append(dynamicClose)
+
         let floatBtn = $('<a>')
             .addClass('card-scroll btn-floating btn-large waves-effect waves-light red')
             .html('<i class="material-icons">keyboard_arrow_down</i>')
@@ -467,7 +479,7 @@
 
         let name = $('<div>')
             .addClass('card-name')
-            .append(strong)
+            .append(strong, a)
 
         let content = $('<div>')
             .addClass('card-content grey lighten-3')
