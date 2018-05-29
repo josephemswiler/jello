@@ -6,7 +6,11 @@
             <div id="board-{{currentBoard.id}}" class="card-content grey-text current-board-name text-lighten-2">{{currentBoard.name}}</div>
         </div>
         <div class="card board-star outer-card">
+            {{#if currentBoard.starred}}
+            <a class="card-content board-fav-star grey-text text-lighten-2 material-icons">star</a>
+            {{else}}
             <a class="card-content board-fav-star grey-text text-lighten-2 material-icons">star_border</a>
+            {{/if}}
         </div>
     </div>
     <div class="rename-board card animated flipInX">

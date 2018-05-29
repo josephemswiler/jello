@@ -184,11 +184,21 @@
     }
 
     $(document).on('click', '.board-fav-star', function () {
+
+        let star = 0
+
         if ($(this).text() === 'star_border') {
             $(this).text('star')
+            star = 1
         } else {
             $(this).text('star_border')
         }
+
+        dbUpdate('boards', {
+            id: $('.board-wrapper')[0].dataset.id,
+            name: $('.board-title').children('.card-content').text(),
+            starred: star
+        })
     })
 
     $(document).on('click', '.open-card-btn', function () {
