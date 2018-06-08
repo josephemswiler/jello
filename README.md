@@ -26,4 +26,4 @@ Users can add boards that contain a collection of lists. Each list contains a co
 - Heroku
   - JawsDB
 - JSON / AJAX
-- MVC
+- MVC Framework
