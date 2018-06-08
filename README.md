@@ -2,7 +2,7 @@
 
 Jello is a clone of a popular web-based project management application.
 
-See the project here: [Jello](https://hello-jello.herokuapp.com/ "Jello").
+See the project here: [Jello](https://jello-jfe.herokuapp.com/ "Jello").
 
 **Functionality**
 ---
